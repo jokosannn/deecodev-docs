@@ -1,0 +1,66 @@
+import Link from '@docusaurus/Link';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Heading from '@theme/Heading';
+import Translate, { translate } from '@docusaurus/Translate';
+import useBaseUrl, { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
+
+import clsx from 'clsx';
+import styles from './styles.module.css';
+
+function TopBanner() {
+  // const { siteConfig } = useDocusaurusContext();
+
+  return (
+    <div className={styles.topBannerTitleWrapper}>
+      <span className={styles.topBannerTitleTextUp}>welcome to</span>
+      {/* {'🎉\xa0'} */}
+      <span className={styles.topBannerTitleTextDown}>KotheArtz Documentation</span>
+      {/* {'\xa0🥳'} */}
+    </div>
+  );
+}
+
+function HeroBanner() {
+  return (
+    <div className={styles.hero} data-theme="dark">
+      <div className={styles.heroInner}>
+        <Heading as="h1" className={styles.heroProjectTagline}>
+          <img
+            alt={translate({ message: 'Docusaurus with Keytar' })}
+            className={styles.heroLogo}
+            src={useBaseUrl('/img/kotheartz.png')}
+            width="200"
+            height="200"
+          />
+          <span
+            className={clsx('md:leading-[65px]', styles.heroTitleTextHtml)}
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: translate({
+                id: 'homepage.hero.title',
+                message:
+                  'Explore step-by-step <b>guides</b>, <b>references</b>, and <b>examples</b> code usage.',
+                description: 'Home page hero title, can contain simple html tags',
+              }),
+            }}
+          />
+        </Heading>
+        <div className={styles.buttonDocs}>
+          <Link className="button button--secondary button--lg" to="/docs/intro">
+            Documentation
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function HomepageHeader(): JSX.Element {
+  const { siteConfig } = useDocusaurusContext();
+  return (
+    <header>
+      <TopBanner />
+      <HeroBanner />
+    </header>
+  );
+}
