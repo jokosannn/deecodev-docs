@@ -1,0 +1,182 @@
+---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Logging
+
+Logging adalah proses pencatatan atau pengumpulan data tentang berbagai aktivitas atau peristiwa yang terjadi dalam suatu sistem atau aplikasi.
+
+Diluar NodeJS Logging, banyak sekali library yang bisa kita gunakan untuk logging, seperti:
+
+1. [Winston](https://www.npmjs.com/package/winston)
+2. [Bunyan](https://www.npmjs.com/package/bunyan)
+3. [Pino](https://www.npmjs.com/package/pino)
+4. [Loglevel](https://www.npmjs.com/package/loglevel)
+5. [NPMLog](https://www.npmjs.com/package/npmlog)
+
+Disini saya akan menggunakan `Winston`
+
+## Installation
+
+<Tabs>
+  <TabItem value="npm" label="npm" default>
+```bash npm2yarn
+npm install winston
+```
+
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+```bash npm2yarn
+yarn add winston
+```
+
+  </TabItem>
+</Tabs>
+
+Next, import it into your Node.js application:
+
+<Tabs>
+  <TabItem value="Module" label="Module" default>
+```js
+import winston from 'winston';
+```
+
+  </TabItem>
+  <TabItem value="CommonJS" label="CommonJS">
+```js
+const winston = require('winston');
+```
+
+  </TabItem>
+</Tabs>
+
+## Logger
+
+- Logger adalah sebuah object di Winston, yang digunakan untuk melakukan logging
+- Untuk membuat object Logger, kita bisa menggunakan function `createLogger()` yang terdapat di package/module winston
+
+```js
+const logger = winston.createLogger({
+  // ...
+});
+logger.log('something!!!');
+```
+
+## Console Transport
+
+- Saat membuat Logger, secara default Logger tidak akan menggunakan Transport
+- Apa itu Transport? Transport adalah destinasi atau target yang digunakan untuk mengirim log.
+- Ada banyak sekali Transport, salah satunya yang paling sederhana adalah `Console`
+- Console merupakan Transport yang digunakan untuk mengirim data log ke console/stdout
+
+```js
+const logger = winston.createLogger({
+  // highlight-start
+  transports: [new winston.transports.Console({})],
+  // highlight-end
+});
+```
+
+## Level
+
+- Dalam logging, terdapat istilah yang bernama Level, Level biasanya digunakan sebagai informasi seberapa penting log tersebut
+- Level dimulai dari paling rendah ke paling tinggi, semakin tinggi Level nya, artinya semakin penting informasi log tersebut
+- Untuk menambahkan Level ketika melakukan log, kita bisa ubah attribute level menjadi level yang kita inginkan
+
+#### Winston Level
+
+- `error`
+- `warn`
+- `info`
+- `http`
+- `verbose`
+- `debug`
+- `silly`
+
+:::note
+
+- Secara `default`, saat kita membuat Logger, Logger hanya akan menampilkan log dengan level `info` atau level diatasnya
+- Jika kita ingin mengubah log level mana yang ingin kita tampilkan, maka kita perlu ubah konfigurasi level ketika kita membuat logger, dengan menggunakan level minimal yang ingin kita tampilkan
+
+:::
+
+```js
+const logger = winston.createLogger({
+  // highlight-start
+  level:  process.env.LOG_LEVEL || 'debug'
+  // highlight-end
+  transports: [new winston.transports.Console({})],
+});
+```
+
+:::tip
+
+- Logger juga memiliki function shortcut yang bisa digunakan untuk melakukan logging, sehingga kita tidak perlu menggunakan function log dan object dengan attribute level lagi
+- Kita bisa langsung menggunakan function dengan nama sesuai dengan level nya, misal logger.info(message), logger.warn(message), dan lain-lain
+
+:::
+
+```js
+logger.log('...'); // bofore
+// highlight-start
+logger.debug('...'); //after
+// highlight-end
+// other logger
+```
+
+## Format
+
+- Format adalah object yang digunakan untuk melakukan formatting data log sebelum dikirim ke Transport
+- Saat kita membuat Logger, secara default, Logger akan akan menggunakan `JSON` Format, artinya data akan dikirim dalam bentuk JSON
+- Winston juga menyediakan banyak format lain selain JSON
+
+#### Winston Format
+
+```js
+align();
+cli();
+colorize();
+combine();
+errors();
+json();
+label();
+logstash();
+metadata();
+ms();
+padLevels();
+prettyPrint();
+printf();
+simple();
+splat();
+timestamp();
+uncolorize();
+```
+
+```js
+const logger = winston.createLogger({
+  level:  process.env.LOG_LEVEL || 'debug'
+  // highlight-start
+  format: winston.format.simple()
+  // highlight-end
+  transports: [new winston.transports.Console({})],
+});
+```
+
+#### Membuat format sendiri
+
+- Winston menyediakan format `printf`, yang bisa digunakan untuk membuat format sendiri
+
+```js
+const logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || 'debug',
+  // highlight-start
+  format: winston.format.printf((info) => {
+    return `${new Date()} : ${info.level.toUpperCase()} : ${info.message}`;
+  }),
+  // highlight-end
+  transports: [new winston.transports.Console({})],
+});
+```
