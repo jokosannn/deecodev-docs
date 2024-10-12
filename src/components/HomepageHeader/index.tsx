@@ -1,8 +1,8 @@
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Heading from '@theme/Heading';
-import Translate, { translate } from '@docusaurus/Translate';
-import useBaseUrl, { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
+import { translate } from '@docusaurus/Translate';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import clsx from 'clsx';
 import styles from './styles.module.css';
