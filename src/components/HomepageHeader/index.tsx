@@ -8,8 +8,6 @@ import clsx from 'clsx';
 import styles from './styles.module.css';
 
 function TopBanner() {
-  // const { siteConfig } = useDocusaurusContext();
-
   return (
     <div className={styles.topBannerTitleWrapper}>
       <span className={styles.topBannerTitleTextUp}>welcome to</span>
