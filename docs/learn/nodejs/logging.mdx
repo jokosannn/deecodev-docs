@@ -182,3 +182,78 @@ const logger = winston.createLogger({
   transports: [new winston.transports.Console({})],
 });
 ```
+
+## Combine Format
+
+- Winston memiliki fitur bernama Combine Format, dimana kita bisa melakukan kombinasi beberapa Format sekaligus
+- Ini cocok untuk menambah informasi tambahan ke log data, misal data timestamp, data jarak waktu antar log, dan lain-lain
+- Kita bisa menggunakan Combine Format di Winston untuk menggabungkan beberapa Format
+
+```js
+const logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || 'debug',
+  // highlight-start
+  format: winston.format.combine(winston.format.timestamp(), winston.format.ms(), winston.format.json()),
+  // highlight-end
+  transports: [new winston.transports.Console({})],
+});
+```
+
+## File Transport
+
+- Sebelumnya kita hanya menggunakan Console Transport, selain Console Transport, di Winston juga terdapat File Transport
+- Dari namanya kita sudah tahu, bahwa Transport ini akan menyimpan data log ke file
+- Kita bisa menambahkan langsung beberapa Transport dalam satu Logger object
+
+```js
+const logger = winston.createLogger({
+  // level
+  //format
+  transports: [
+    // highlight-start
+    new winston.transports.Console({}),
+    new winston.transports.File({
+      filename: 'transport.log',
+    }),
+    // highlight-end
+  ],
+});
+```
+
+## Transport Level
+
+- Beberapa Transport memiliki pengaturan Level sendiri
+- Saat sebuah Transport memiliki pengaturan Level, secara otomatis Transport hanya akan menerima log dengan level tersebut atau yang lebih tinggi
+- Hal ini sangat cocok misal ketika kita ingin memisahkan beberapa level log di transport yang berbeda
+
+```js
+const logger = winston.createLogger({
+  // level
+  // format
+  transports: [
+    new winston.transports.Console({}),
+    new winston.transports.File({
+      filename: 'transport.log',
+    }),
+      // highlight-start
+    new winston.transports.File({
+      level: 'error'
+      filename: 'transport-error.log',
+    }),
+    // highlight-end
+  ],
+});
+```
+
+```bash title="transport.log"
+{"level":"info","message":"Hello World.","timestamp":"2024-10-13T14:52:59.297Z"}
+{"level":"info","message":"Hello World.","timestamp":"2024-10-13T14:52:59.311Z"}
+{"level":"info","message":"Hello World.","timestamp":"2024-10-13T14:52:59.312Z"}
+{"level":"error","message":"Hello Error!.","timestamp":"2024-10-13T14:52:59.312Z"}
+{"level":"error","message":"Hello Error!.","timestamp":"2024-10-13T14:52:59.313Z"}
+```
+
+```bash title="transport-error.log"
+{"level":"error","message":"Hello Error!.","timestamp":"2024-10-13T14:52:59.312Z"}
+{"level":"error","message":"Hello Error!.","timestamp":"2024-10-13T14:52:59.313Z"}
+```
