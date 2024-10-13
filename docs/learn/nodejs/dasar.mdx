@@ -1,0 +1,383 @@
+---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Dasar
+
+## Introduction
+
+- NodeJS diperkenalkan pertama kali oleh Ryan Dahl pada tahun 2009
+- NodeJS merupakan teknologi yang bisa digunakan untuk menjalankan kode JavaScript diluar Web Browser
+- NodeJS dibuat dari V8 Engine, yaitu Engine untuk Google Chrome
+- NodeJS merupakan project yang Free dan OpenSource
+
+## Kenapa Belajar NodeJS
+
+- NodeJS mempopulerkan paradigma JavaScript Everywhere, dimana dengan menggunakan NodeJS, kita bisa membuat aplikasi berbasis server side dengan bahasa pemrograman JavaScript
+- Hal ini membuat kita hanya butuh belajar bahasa pemrograman JavaScript untuk membuat aplikasi web misalnya, sehingga tidak butuh belajar bahasa pemrograman lain seperti PHP atau Java untuk server side web nya
+- Saat ini NodeJS sangat populer dan banyak sekali digunakan di perusahaan teknologi, terutama untuk membantu pengembangan Web Frontend
+
+## Yang Tidak Bisa Dilakukan NodeJS
+
+- Karena NodeJS tidak berjalan di Browser, jadi tidak semua fitur JavaScript bisa dilakukan di NodeJS
+- Fitur seperti Document Object Model dan banyak Web API tidak bisa dilakukan di NodeJS, hal ini karena DOM dan beberapa Web API berjalan membutuhkan Browser
+
+## Instalation
+
+### Manual
+
+Download versi NodeJS LTS (Long Term Support)
+
+https://nodejs.org/en
+
+### Package Menanger
+
+1. [NVM](https://github.com/nvm-sh/nvm)
+1. [Chocolatey](https://community.chocolatey.org/packages/nodejs)
+
+## Menjalankan Kode JavaScript
+
+Karena NodeJS tidak memerlukan Web Browser, jadi kita bisa langsung menjalankan program JavaScript kita menggunakan aplikasi NodeJS lewat terminal / command promt, dengan perintah :
+
+Buat file `hello-world.js`
+
+```js title="hello-world.js"
+console.log('Hello World');
+```
+
+Next, jalankan code di `terminal / command promt`:
+
+```bash
+node namafile.js
+```
+
+## NodeJS Standard Library
+
+<Tabs>
+  <TabItem value="commonjs" label="CommonJS" default>
+```js title="index.js"
+const fs = require("fs");
+```
+
+  </TabItem>
+  <TabItem value="module" label="Module">
+```js title="index.mjs"
+import fs from "fs"
+```
+
+  </TabItem>
+</Tabs>
+
+## NodeJS API
+
+### OS
+
+OS merupakan standard library yang bisa digunakan untuk mendapatkan informasi tentang sistem operasi yang digunakan
+
+https://nodejs.org/dist/latest-v16.x/docs/api/os.html
+
+```js title="os.mjs"
+import os from 'os';
+
+console.info(os.platform());
+console.info(os.arch());
+//...
+```
+
+### Path
+
+Path merupakan standard library yang bisa kita gunakan untuk bekerja dengan lokasi file dan directory / folder
+
+https://nodejs.org/dist/latest-v16.x/docs/api/path.html
+
+```js title="path.mjs"
+import path from 'node:path';
+
+const file = '/Users/joko/index.html';
+
+console.info(path.dirname(file));
+console.info(path.basename(file));
+console.info(path.extname(file));
+//...
+```
+
+### File System
+
+- File System merupakan standard library yang bisa digunakan untuk memanipulasi file system
+- Dalam File System, terdapat 3 jenis library
+- Pertama library yang bersifat blocking atau `synchronous`
+- Kedua library yang bersifat non-blocking atau asynchronous menggunakan `callback`
+- Ketika library yang bersifat non-blocking atau asynchronous tapi menggunakan `promise`
+
+https://nodejs.org/dist/latest-v16.x/docs/api/fs.html
+
+#### Promise
+
+```js title="fs-promise.mjs"
+import * as fs from 'node:fs/promises';
+
+const readFile = await fs.readFile('src/async.mjs', 'utf-8');
+console.log(readFile);
+
+await fs.writeFile('txt/temp.txt', 'Hello Nodejs!!', 'utf-8');
+console.log('success create file temp.txt');
+```
+
+#### sync
+
+```js title="fs-sync.mjs"
+import * as fs from 'node:fs';
+
+const readFile = fs.readFileSync('src/async.mjs', 'utf-8');
+console.log(readFile);
+
+await fs.writeFileSync('txt/temp.txt', 'Hello Nodejs!!', 'utf-8');
+console.log('success create file temp.txt');
+```
+
+#### Callback
+
+```js title="fs-callback.mjs"
+import * as fs from 'node:fs';
+
+fs.readFile('/tmp/hello.txt', (data, err) => {
+  if (err) throw err;
+  console.log(data);
+});
+```
+
+### Debugger
+
+- NodeJS memiliki fitur debugger, dimana kita bisa mengikuti tahapan eksekusi program di NodeJS
+- Hal ini sangat cocok ketika kita melakukan proses debugging, mencari sebab masalah yang terjadi di aplikasi kita
+
+https://nodejs.org/dist/latest-v16.x/docs/api/debugger.html
+
+```bash title="Terminal"
+node inspect namafile.js
+
+● cont, c: Continue execution
+● next, n: Step next
+● step, s: Step in
+● out, o: Step out
+● pause: Pause running code
+```
+
+```js title="debugger.mjs"
+function sayHello(number) {
+  // highlight-start
+  debugger;
+  // highlight-end
+  return 2 * number;
+}
+
+console.info(sayHello(7));
+```
+
+### DNS
+
+DNS merupakan standard library yang bisa digunakan untuk bekerja dengan DNS (domain name server)
+
+https://nodejs.org/dist/latest-v16.x/docs/api/dns.html
+
+```js title="dns.mjs"
+import dns from 'node:dns/promises';
+
+const data = await dns.resolve4('www.youtube.com');
+let hostname = [];
+data.forEach((e, host) => {
+  hostname.push({ e, host });
+});
+console.log(hostname);
+```
+
+### Events
+
+- Events adalah standard library di NodeJS yang bisa digunakan sebagai implementasi Event Listener
+- Di dalam Events, terdapat sebuah class bernama EventEmitter yang bisa digunakan untuk menampung data listener per jenis event.
+- Lalu kita bisa melakukan emmit untuk mentrigger jenis event dan mengirim data ke event tersebut
+
+https://nodejs.org/dist/latest-v16.x/docs/api/events.html
+
+```js title="event.mjs"
+import { EventEmitter } from 'node:events';
+
+const emiter = new EventEmitter();
+
+// addListener(:eventName, :listener)
+emiter.addListener('hello', (name) => {
+  console.info(`hello ${name}`);
+});
+
+emiter.addListener('hello', (name) => {
+  console.info(`hallo ${name}`);
+});
+
+// emit(eventName, args)
+emiter.emit('hello', 'joko');
+```
+
+### Global
+
+- Di dalam NodeJS, terdapat library berupa variable atau function yang secara global bisa diakses dimana saja, tanpa harus melakukan import
+- Kita bisa melihat detail apa saja fitur yang terdapat secara global di halaman dokumentasinya
+
+https://nodejs.org/dist/latest-v16.x/docs/api/globals.html
+
+```js title="global.mjs"
+setTimeout(() => {
+  console.log('nunggu 2d baru muncul');
+}, 2000);
+```
+
+### Process
+
+- Process merupakan standard library yang digunakan untuk mendapatkan informasi proses NodeJS yang sedang berjalan
+- Process juga merupakan instance dari EventEmitter, sehingga kita bisa menambahkan listener kedalam Process
+
+https://nodejs.org/dist/latest-v16.x/docs/api/process.html
+
+```js title="process.mjs"
+import process from 'node:process';
+
+process.addListener('exit', (exitCode) => {
+  console.log('Exit code' + exitCode);
+});
+
+console.info(process.version);
+console.table(process.argv);
+console.info(process.env.USERNAME);
+
+process.exit(1);
+
+// hello tidak akan di eksekusi
+console.log('hello');
+```
+
+### Readline
+
+- Readline merupakan standard library yang digunakan untuk membaca input
+- Readline hanya mendukung versi callback di versi NodeJS 16
+- Namun di NodeJS 17 sudah mendukung Promise sehingga lebih mudah digunakan
+
+https://nodejs.org/dist/latest-v16.x/docs/api/readline.html
+
+```js title="readline.mjs"
+import * as readline from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
+
+const rl = readline.createInterface({ input, output });
+const answer = await rl.question('siapa nama Anda? ');
+console.log(`nama saya ${answer}`);
+
+rl.close();
+```
+
+### Report
+
+Report merupakan fitur yang terdapat di NodeJS untuk membuat laporan secara otomatis dalam file ketika sesuatu terjadi pada aplikasi NodeJS kita
+
+https://nodejs.org/dist/latest-v16.x/docs/api/report.html
+
+```js title="report"
+import * as readline from 'node:readline/promises';
+import process from 'node:process';
+
+process.report.reportOnUncaughtException = true;
+process.report.reportOnFatalError = true;
+process.report.reportOnSignal = true;
+process.report.filename = 'data/report-error.json';
+
+function newError() {
+  throw new Error('Upss!!!');
+}
+
+newError();
+```
+
+### Buffer
+
+- Buffer merupakan object yang berisikan urutan byte dengan panjang tetap.
+- Buffer merupakan turunan dari tipe data Uint8Array.
+
+https://nodejs.org/dist/latest-v16.x/docs/api/buffer.html
+
+```js title="buffer.js"
+const buffer = Buffer.from('Joko Santoso');
+
+console.info(buffer);
+console.info(buffer.toString());
+
+buffer.reverse();
+console.log(buffer.toString());
+```
+
+#### Buffer Encoding
+
+- Buffer juga bisa digunakan untuk melakukan encoding dari satu encoding ke encoding yang lain
+- Ada banyak encoding yang didukung oleh Buffer, misal utf8, ascii, hex, base64, base64url dan lain-lain
+
+```js title="buffer-encoding.js"
+const buffer = Buffer.from('Joko Santoso', 'utf-8');
+
+console.info(buffer.toString());
+console.info(buffer.toString('base64'));
+console.info(buffer.toString('hex'));
+
+const bufferBase64 = Buffer.from('Sm9rbyBTYW50b3Nv', 'base64');
+console.info(bufferBase64.toString('utf-8'));
+```
+
+### Stream
+
+- Stream adalah standard library untuk kontrak aliran data di NodeJS
+- Ada banyak sekali Stream object di NodeJS
+- Stream bisa jadi object yang bisa dibaca, atau bisa di tulis, dan Stream adalah turunan dari EventEmitter
+
+https://nodejs.org/dist/latest-v16.x/docs/api/stream.html
+
+```js title="stream.mjs"
+import fs from 'node:fs';
+
+const writer = fs.createWriteStream('data/target-stream.log');
+writer.write('Joko\n');
+writer.write('Santoso\n');
+writer.write('Ganteng\n');
+
+writer.end();
+
+const reader = fs.createReadStream('data/target-stream.log');
+
+reader.addListener('data', (data) => {
+  console.info(data.toString());
+});
+```
+
+### Timer
+
+- Timer merupakan standard library untuk melakukan scheduling
+- Function di Timer terdapat di globals, sehingga kita bisa menggunakannya tanpa melakukan import, namun semua function Timer menggunakan Callback
+- Jika kita ingin menggunakan Timer versi Promise, kita bisa meng-import dari module timer/promise
+
+https://nodejs.org/dist/latest-v16.x/docs/api/timers.html
+
+```js title="timer.mjs"
+import { setInterval } from 'node:timers/promises';
+
+// global
+setInterval(() => {
+  console.log(`Timer at ${new Date()}`);
+}, 1000);
+
+// promise
+const interval = 1000;
+for await (const startTime of setInterval(interval, Date.now())) {
+  const now = Date.now();
+  console.log(now);
+  if (now - startTime > 5000) break;
+}
+console.log(Date.now());
+```
