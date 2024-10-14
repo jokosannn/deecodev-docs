@@ -25,16 +25,14 @@ Disini saya akan menggunakan `Winston`
 
 <Tabs>
   <TabItem value="npm" label="npm" default>
-```bash npm2yarn
-npm install winston
-```
-
+    ```bash npm2yarn
+    npm install winston
+    ```
   </TabItem>
   <TabItem value="yarn" label="Yarn">
-```bash npm2yarn
-yarn add winston
-```
-
+    ```bash npm2yarn
+    yarn add winston
+    ```
   </TabItem>
 </Tabs>
 
@@ -42,16 +40,14 @@ Next, import it into your Node.js application:
 
 <Tabs>
   <TabItem value="Module" label="Module" default>
-```js
-import winston from 'winston';
-```
-
+    ```js
+    import winston from 'winston';
+    ```
   </TabItem>
   <TabItem value="CommonJS" label="CommonJS">
-```js
-const winston = require('winston');
-```
-
+    ```js
+    const winston = require('winston');
+    ```
   </TabItem>
 </Tabs>
 
@@ -256,4 +252,123 @@ const logger = winston.createLogger({
 ```bash title="transport-error.log"
 {"level":"error","message":"Hello Error!.","timestamp":"2024-10-13T14:52:59.312Z"}
 {"level":"error","message":"Hello Error!.","timestamp":"2024-10-13T14:52:59.313Z"}
+```
+
+## Rotate File
+
+- Secara default, winston Transport File hanya akan menyimpan semua log di dalam satu file
+- Hal ini akan sangat berbahaya ketika aplikasi berjalan dalam jangka waktu lama, sehingga menyebabkan ukuran file akan semakin membesar
+
+Winston sendiri membuat package terpisah untuk membantu ini, yaitu `Daily Rotate File`
+
+https://www.npmjs.com/package/winston-daily-rotate-file 
+
+Package ini bisa digunakan untuk membuat rotasi file transport secara otomatis sesuai aturan yang kita tentukan, dan bisa secara otomatis menghapus file lama ketika sudah tidak diperlukan lagi
+
+### Instal Package Daily Rotate File
+
+```bash
+npm install winston-daily-rotate-file
+```
+
+Next
+
+```js
+import DailyRotateFile from 'winston-daily-rotate-file'
+
+const logger = winston.createLogger({
+  // ...
+  transports: [
+    new winston.transports.Console({}),
+    // highlight-start
+    new DailyRotateFile({
+      filename: 'app-%DATE%.log',
+      zippedArchive: true,
+      maxSize: '1m', // 1 mega
+      maxFiles: '14d' // 14 hari
+    })
+    // highlight-end
+  ],
+});
+```
+
+## Exception and Rejections
+
+- Saat kita membuat program NodeJS, kadang kita lupa menangkap Exception
+- Hal ini bisa berbahaya karena nanti kita tidak bisa melakukan debug Exception dengan baik, sehingga tidak bisa kita investigasi selanjutnya
+
+![Docusaurus logo](/img/img-exception-code.png)
+![Docusaurus logo](/img/img-exception-error.png)
+
+### Handle Exceptions 
+
+- Winston memiliki fitur secara otomatis yang bisa digunakan untuk menangkap Exception yang belum ter-handle
+- Kita bisa lakukan pengaturan ini di Logger, yang secara otomatis exception akan dikirim ke semua Transport
+- Atau kita bisa lakukan pengaturan ini di Transport
+
+```js title="hello.js"
+hello()
+```
+
+```js
+const logger = winston.createLogger({
+  // ...
+  transports: [
+    new winston.transports.Console({}),
+    new winston.transports.File({
+      // highlight-start
+      handleExceptions: true,
+      // highlight-end
+      filename: 'exception.log',
+    }),
+    
+  ],
+});
+```
+
+### Handle Rejections
+
+- Sama seperti handle `exception` namun versi `promise reject`
+
+```js title="async.js"
+async function callAsync() {
+  return Promise.reject('Ups!!');
+}
+
+callAsync()
+```
+
+```js
+const logger = winston.createLogger({
+  // ...
+  transports: [
+    new winston.transports.Console({}),
+    new winston.transports.File({
+      // highlight-start
+      handleRejections: true,
+      // highlight-end
+      filename: 'exception.log',
+    }),
+  ],
+});
+```
+
+:::tip[Tips]
+- Anda bisa langsung menggabungkan antara exceptions dan rejections
+:::
+
+```js
+const logger = winston.createLogger({
+  // ...
+  transports: [
+    new winston.transports.Console({}),
+    new winston.transports.File({
+      // highlight-start
+      handleExceptions: true,
+      handleRejections: true,
+      // highlight-end
+      filename: 'exception.log',
+    }),
+  ],
+});
 ```
