@@ -10,9 +10,9 @@ import styles from './styles.module.css';
 function TopBanner() {
   return (
     <div className={styles.topBannerTitleWrapper}>
-      <span className={styles.topBannerTitleTextUp}>welcome to</span>
+      <span className={styles.topBannerTitleTextUp}>welcome to code</span>
       {/* {'🎉\xa0'} */}
-      <span className={styles.topBannerTitleTextDown}>KotheArtz Documentation</span>
+      <span className={styles.topBannerTitleTextDown}>Documentation</span>
       {/* {'\xa0🥳'} */}
     </div>
   );

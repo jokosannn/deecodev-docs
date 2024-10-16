@@ -5,19 +5,17 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Dasar
+# Basics
 
 NodeJS Dasar
 
-Slide:
-https://docs.google.com/presentation/d/1-1dUV22id_QR4FbWPrR0NzQFnAr6VQVI
+Slide : https://docs.google.com/presentation/d/1-1dUV22id_QR4FbWPrR0NzQFnAr6VQVI
 
-## Introduction
+## Pengenalan NodeJS
 
-- NodeJS diperkenalkan pertama kali oleh Ryan Dahl pada tahun 2009
-- NodeJS merupakan teknologi yang bisa digunakan untuk menjalankan kode JavaScript diluar Web Browser
-- NodeJS dibuat dari V8 Engine, yaitu Engine untuk Google Chrome
-- NodeJS merupakan project yang Free dan OpenSource
+NodeJS diperkenalkan pertama kali oleh Ryan Dahl pada tahun 2009. Ini merupakan teknologi yang bisa digunakan untuk menjalankan kode JavaScript di luar Web Browser. NodeJS dibuat dari V8 Engine, yaitu Engine untuk Google Chrome. NodeJS merupakan project yang Free dan OpenSource.
+
+Website resmi: [https://nodejs.org/](https://nodejs.org/)
 
 ## Kenapa Belajar NodeJS
 
@@ -30,18 +28,61 @@ https://docs.google.com/presentation/d/1-1dUV22id_QR4FbWPrR0NzQFnAr6VQVI
 - Karena NodeJS tidak berjalan di Browser, jadi tidak semua fitur JavaScript bisa dilakukan di NodeJS
 - Fitur seperti Document Object Model dan banyak Web API tidak bisa dilakukan di NodeJS, hal ini karena DOM dan beberapa Web API berjalan membutuhkan Browser
 
+## Web Application
+
+Web Application adalah aplikasi yang berjalan di Server dan ditampilkan di Browser Client. Terdiri dari tiga komponen utama:
+
+### Client
+
+- User interface atau bagian frontend dari web application.
+- Digunakan untuk berinteraksi dengan Server.
+- Biasanya dibuat menggunakan HTML, CSS, dan JavaScript.
+
+### Server
+
+- Bertanggung jawab untuk menerima dan memproses request dari Client.
+- Bertugas sebagai backend untuk web application.
+- Dengan NodeJS, kita bisa membuat Server menggunakan JavaScript.
+
+### Database
+
+- Tempat untuk menyimpan data web application.
+- Data disimpan dan diambil oleh Server.
+- Client tidak bisa langsung mengakses Database.
+
+## Concurrency dan Parallel
+
+### Sejarah
+
+Evolusi dari komputasi sekuensial ke parallel dan concurrent computing.
+
+### Thread
+
+- Proses ringan dalam sebuah aplikasi.
+- Memungkinkan aplikasi untuk menjalankan beberapa tugas secara bersamaan.
+
+### Concurrency vs Parallel
+
+- Concurrency: Mengerjakan beberapa pekerjaan satu persatu.
+- Parallel: Mengerjakan beberapa pekerjaan sekaligus pada satu waktu.
+
+### Synchronous vs Asynchronous
+
+- Synchronous: Kode dieksekusi secara berurutan.
+- Asynchronous: Kode dieksekusi tanpa menunggu operasi sebelumnya selesai.
+
+### Threadpool
+
+- Konsep manajemen thread untuk optimalisasi kinerja.
+- Threadpool Queue untuk mengelola tugas yang belum dikerjakan.
+
 ## Instalation
 
-### Manual
-
-Download versi NodeJS LTS (Long Term Support)
-
-https://nodejs.org/en
-
-### Package Menanger
-
-1. [NVM](https://github.com/nvm-sh/nvm)
-1. [Chocolatey](https://community.chocolatey.org/packages/nodejs)
+1. Manual download dari [nodejs.org](https://nodejs.org/en/download/)
+2. Menggunakan package manager:
+   - NVM: [https://github.com/nvm-sh/nvm](https://github.com/nvm-sh/nvm)
+   - Chocolatey: [https://community.chocolatey.org/packages/nodejs](https://community.chocolatey.org/packages/nodejs)
+   - Homebrew: [https://formulae.brew.sh/formula/node](https://formulae.brew.sh/formula/node)
 
 ## Menjalankan Kode JavaScript
 
@@ -53,7 +94,7 @@ Buat file `hello-world.js`
 console.log('Hello World');
 ```
 
-Next, jalankan code di `terminal / command promt`:
+Next, Jalankan dengan perintah di `terminal / command promt`:
 
 ```bash
 node namafile.js

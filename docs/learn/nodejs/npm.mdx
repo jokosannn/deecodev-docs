@@ -4,7 +4,9 @@ sidebar_position: 2
 
 # NPM
 
-NodeJS NPM
+NodeJS NPM - Node Package Manager
+
+Slide : https://docs.google.com/presentation/d/1-L4Nce46UlQa_drWGgQSrALsefX1cKs8
 
 ## Pengenalan Node Package Manager
 
@@ -25,7 +27,7 @@ NodeJS NPM
 - Saat kita menginstall NodeJS, secara otomatis NPM akan terinstall juga
 - Untuk mengecek versi NPM yang terinstall di komputer kita, kita bisa gunakan perintah :
 
-```bash
+```bash title="terminal"
 npm --version
 ```
 
@@ -191,3 +193,119 @@ npm run dev
 import { summAll } from "node-library" // '.'
 import { riteToFile } from "node-library/write" // './write'
 ```
+
+## Dependency Management
+
+### Install Dependency
+
+- Secara otomatis NPM akan download package yang ada di dependency ke dalam folder `node_modules`
+- Selain itu, NPM juga akan membuat file `package-lock.json` yang berisikan informasi versi package yang di download, ini untuk mempermudah ketika kita melakukan download ulang library di komputer lain
+
+### Install Semua Dependency (development, production)
+
+```bash title="terminal"
+npm install nama-package@version
+npm i nama-package@version 
+```
+
+### Install Dependency Production
+
+```bash title="terminal"
+npm install --production 
+```
+
+### Install Dependency Development
+
+```bash title="terminal"
+npm install nama-package@version --save-dev
+npm i -D nama-package@version 
+```
+
+:::tip
+- `dependencies` adalah package yang dibutuhkan oleh aplikasi di lingkungan runtime atau production, tanpa package ini aplikasi kita tidak akan bekerja dengan semestinya.
+- `devDependencies` adalah package yang dibutuhkan oleh aplikasi di lingkungan development dan testing. Biasanya package di devDependencies dibutuhkan untuk development namun tidak dibutuhkan ketika aplikasi dirilis ke costumer
+:::
+
+## Dependency Version
+
+### Semantic Version
+
+- NodeJS merekomendasikan menggunakan semantic version dalam menentukan format version pada package yang kita buat
+- Jika kita perhatikan, kebanyakan package di [NPM](https://www.npmjs.com/) menggunakan semantic version
+- Web Semantic versioning : https://semver.org/ 
+- Versi semantik ditulis dalam bentuk `MAJOR.MINOR.PATCH`.
+- Aturan semantic version:
+  - Jika `mengubah fitur`, dan melakukan code break, upgrade versi `MAJOR`
+  - Jika `menambah fitur`, tidak ada code break, upgrade versi `MINOR`
+  - Jika `melakukan bugfix`, tidak ada code break, upgrade versi `PATCH`
+
+
+
+| Versi | Keterangan                                                                             |
+| ----- | -------------------------------------------------------------------------------------- |
+| x.    | Download versi terbaru dan update ke versi terbaru walaupun MAJOR berubah              |
+| 1.x   | Download versi 1 terbaru, update ke versi terbaru, tapi MAJOR tetap di 1               |
+| 1.1.x | Download versi 1.1 terbaru, update ke versi terbaru, tapi MAJOR dan MINOR tetap di 1.1 |
+| 1.1.1 | Selalu download versi 1.1.1, tidak akan update walaupun ada versi baru                 |
+
+| Versi  | Keterangan                                                                                             |
+| ------ | ------------------------------------------------------------------------------------------------------ |
+| ~1.1.1 | Download versi 1.1.1, jika ada update, lakukan update, namun hanya update jika PATCH berubah           |
+| ^1.1.1 | Download versi 1.1.1, jika ada update, lakukan update, namun hanya update jika MINOR dan PATCH berubah |
+
+Detail : https://semver.npmjs.com/
+
+## Membuat Library Sendiri
+
+Siapkan terlebih dahulu project anda yang akan di publish ke npm.
+
+Next, login ke Web NPM dengan menggunakan perintah :
+
+```bash title="terminal"
+npm adduser
+```
+Setelah login, sekarang kita bisa melakukan publish package ke web NPM dengan menggunakan perintah :
+
+```bash title="terminal"
+npm publish
+```
+
+:::note
+Perlu diingat, nama package itu harus unique secara global, jadi pastikan sebelum publish ke web NPM, pastikan tidak ada package dengan nama yang sama
+:::
+
+Next, jika inggin menginstall package nya cukup jalankan terminal denagn perintah :
+
+```bash
+npm install nama-package
+```
+
+Jika inggin `mengupdate` library anda, cukup dengan menjalankan perintah :
+
+```bash title="terminal"
+npm publish
+```
+
+## Ignore File
+
+- Saat kita publish package ke web NPM, secara default, semua file yang terdapat di project akan di publish ke web NPM
+- Kadang kita ingin meng-ignore beberapa file agar tidak ikut terpublish ke web NPM
+- Untuk itu, kita bisa membuat file `.npmignore`
+- Format pemulisan `.npmignore` sama dengan format penulisan `.gitignore`
+- Jadi kita kita sudah terbiasa menggunakan Git, maka kita tidak perlu belajar lagi.
+
+## Update Library
+
+Untuk melakukan update library dependency, yang perlu kita lakukan adalah mengubah versi dari dependency nya
+Atau jika kita sudah menggunakan version ~ atau ^, maka kita bisa secara otomatis melakukan update dengan menggunakan perintah :
+
+```bash
+npm update nama-package
+```
+
+Atau jika kita ingin melakukan update semua dependency, gunakan perintah:
+
+```bash
+npm update
+```
+

@@ -5,7 +5,6 @@
 
 /* Top Banner */
 .topBannerTitleWrapper {
-  /* "px-5 max-w-[900px] mx-auto text-center flex flex-col items-center" */
   max-width: 900px;
   margin: 0 auto;
   padding-block: 1rem;
@@ -17,7 +16,7 @@
 }
 
 .topBannerTitleTextUp {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: bold;
   text-transform: uppercase;
   opacity: 0.8;
@@ -25,7 +24,7 @@
 
 .topBannerTitleTextDown {
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   margin-top: -0.2rem;
   background: linear-gradient(
     90deg,
@@ -46,7 +45,7 @@ html[data-theme='dark'] .topBannerTitleTextDown {
 @media only screen and (min-width: 640px) {
   .topBannerTitleTextDown {
     margin-inline: 24px;
-    font-size: 2.5rem;
+    font-size: 2.6rem;
     margin-top: -0.8rem;
   }
 
