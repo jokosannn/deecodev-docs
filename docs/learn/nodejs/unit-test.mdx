@@ -5,3 +5,174 @@ sidebar_position: 3
 # Unit Test
 
 NodeJS Unit Test
+
+- NodeJS sendiri sebenarnya memiliki package untuk melakukan assertion, namun kita tidak akan membahasnya, karena jarang sekali orang menggunakan [`package`](https://nodejs.org/api/assert.html) tersebut
+- Programmer NodeJS kebanyakan menggunakan library yang lebih baik untuk melakukan unit test
+
+Sebenarnya ada banyak sekali library opensource yang bisa kita gunakan untuk melakukan unit test di NodeJS, antara lain :
+
+- Jest : https://jestjs.io/
+- Mocha : https://mochajs.org/
+- Jasmine : https://jasmine.github.io/
+- Dan masih banyak yang lainnya
+
+Namun disini saya akan menggunakan [`Jest`](https://jestjs.io/).
+
+## Pengenalan Jest
+
+- Jest adalah salah satu library untuk unit test NodeJS yang sangat populer
+- Jest sendiri dibuat oleh Facebook
+- Jest terintegrasi sangat baik dengan banyak teknologi seperti NodeJS, ReactJS, VueJS, dan lain-lain
+- Jest fokus pada kesederhanaan, sehingga penggunaannya sangat mudah untuk pemula yang ingin mencoba unit test
+
+## Menginstall Jest
+
+Jest digunakan untuk membuat unit test saja, sehingga kita tidak perlu menambahkan sebagai dependency production, kita cukup tambahkan sebagai development dependency.
+
+Kita bisa tambahkan di package.json atau gunakan perintah :
+
+```bash
+npm install jest --save-dev
+```
+
+Next, buat script test di `package.json` :
+
+```json
+{
+  // ...
+  "script": {
+    // highlight-start
+    "test": "jest"
+    // highlight-end
+  }
+  // ...
+}
+```
+
+Selengkapnya : https://www.npmjs.com/package/jest
+
+## Kekurangan Jest
+
+- Sejak awal belajar NodeJS, kita selalu menggunakan JavaScript Modules
+- Sayangnya, Jest sampai dibuatnya materi ini, belum mendukung JavaScript Modules, masih menggunakan cara lama menggunakan CommonJS dengan memanfaatkan function `require()`
+- Untungnya, ada library bernama `Babel`, yang bisa kita gunakan untuk membantu Jest
+
+### Babel
+
+- Babel adalah JavaScript Compiler, yang digunakan untuk melakukan kompilasi kode JavaScript ke kode JavaScript yang berbeda versi, biasanya untuk ke versi yang lebih lama agar kompatibel dengan Browser versi lama.
+- Dengan Babel, kita bisa membuat kode program dengan fitur JavaScript terbaru, seperti Modules, tapi bisa di compile menjadi kode JavaScript lama sehingga compatible ketika dijalankan oleh teknologi lama atau yang belum mendukung fitur JavaScript baru.
+
+Selengkapnya https://babeljs.io/
+
+### Integrasi Babel dan Jest
+
+Jest terintegrasi dengan baik dengan Babel, sehingga Jest bisa secara otomatis melakukan kompilasi kode JavaScript unit test kita dengan Babel, dan menjalankan kode JavaScript dengan versi yang kompatibel dengan Jest.
+
+Install :
+
+```bash
+npm install --save-dev babel-jest
+npm install @babel/preset-env --save-dev
+```
+
+tambahkan di file `package.json` :
+
+```json
+{
+  "scripts": {
+    "test": "jest"
+  },
+  // highlight-start
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  }
+  // highlight-end
+}
+```
+
+Next, create file `babel.config.json` :
+
+```json title="babel.config.json"
+{
+  "presets": ["@babel/preset-env"]
+}
+```
+
+Selengkapnya : https://babeljs.io/setup
+
+## Menjalankan Jest
+
+Buat file `nama.test.js`
+
+```js title="test/nama.test.js"
+// some test code
+```
+
+Jalankan perintah terminal :
+
+```bash
+npm run test
+```
+
+Atau bisa menggunakan NPX :
+
+```bash
+npx jest
+```
+
+:::note
+
+- Di NodeJS terdapat program bernama `NPX` (Node Package Runner)
+- NPX ini digunakan spesial untuk menjalankan perintah yang bisa secara otomatis mendeteksi file yang terdapat di `node_modules/.bin/`
+
+:::
+
+## Membuat Unit Test
+
+- Jest sudah menyediakan function yang diregistrasikan secara global bernama `test()`, function tersebut digunakan untuk membuat unit test
+- test() memiliki parameter nama unit test dan juga function yang berisi kode unit test nya
+
+```js title="name.test.js"
+test('should ...', () => {
+  // some code
+});
+```
+
+## Jest Configuration
+
+- Jest memiliki banyak konfigurasi, namun jika kita tidak ubah konfigurasinya, Jest sudah memiliki default konfigurasi
+- Ada banyak sekali konfigurasi yang terdapat di Jest, kita akan bahas sambil berjalan, dan yang memang diperlukan saja
+- Jest sendiri mendukung dua cara untuk menyimpan data konfigurasi
+
+1. Pertama, menyimpan di file `package.json` dengan key `jest`
+
+```json title="package.json"
+{
+  // ...
+  "jest": {
+    "verbose": true
+  }
+}
+```
+
+2. Kedua dengan menyimpan sebagai file JavaScript di file `jest.config.js/ts/mjs`, atau membuatnya secara otomatis dengan perintah :
+
+```bash
+jest --init
+```
+
+```json title="jest.config.json"
+{
+  "bail": 1,
+  "verbose": true
+  // some configuration
+}
+```
+
+:::note
+Jika menggungkan konfigurasi menggunakan file `jest.config.js/ts/mjs`, jangan lupa untuk memindahkan konfigurasi Jest di `package.json`
+:::
+
+Konfigurasi di Jest sangat sederhana, cukup gunakan key-value, dimana kita bisa melihat semua konfigurasi key yang tersedia dan kegunaannya di halaman https://jestjs.io/docs/configuration

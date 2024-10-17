@@ -29,14 +29,16 @@ Disini saya akan menggunakan `Winston`
 
 <Tabs>
   <TabItem value="npm" label="npm" default>
-    ```bash npm2yarn
-    npm install winston
+    ```bash 
+      npm install winston
     ```
+  
   </TabItem>
   <TabItem value="yarn" label="Yarn">
-    ```bash npm2yarn
-    yarn add winston
+    ```bash 
+      yarn add winston
     ```
+
   </TabItem>
 </Tabs>
 
@@ -47,11 +49,13 @@ Next, import it into your Node.js application:
     ```js
     import winston from 'winston';
     ```
+    
   </TabItem>
   <TabItem value="CommonJS" label="CommonJS">
     ```js
     const winston = require('winston');
     ```
+
   </TabItem>
 </Tabs>
 
@@ -265,7 +269,7 @@ const logger = winston.createLogger({
 
 Winston sendiri membuat package terpisah untuk membantu ini, yaitu `Daily Rotate File`
 
-https://www.npmjs.com/package/winston-daily-rotate-file 
+https://www.npmjs.com/package/winston-daily-rotate-file
 
 Package ini bisa digunakan untuk membuat rotasi file transport secara otomatis sesuai aturan yang kita tentukan, dan bisa secara otomatis menghapus file lama ketika sudah tidak diperlukan lagi
 
@@ -278,7 +282,7 @@ npm install winston-daily-rotate-file
 Next
 
 ```js
-import DailyRotateFile from 'winston-daily-rotate-file'
+import DailyRotateFile from 'winston-daily-rotate-file';
 
 const logger = winston.createLogger({
   // ...
@@ -289,8 +293,8 @@ const logger = winston.createLogger({
       filename: 'app-%DATE%.log',
       zippedArchive: true,
       maxSize: '1m', // 1 mega
-      maxFiles: '14d' // 14 hari
-    })
+      maxFiles: '14d', // 14 hari
+    }),
     // highlight-end
   ],
 });
@@ -304,14 +308,14 @@ const logger = winston.createLogger({
 ![Docusaurus logo](/img/img-exception-code.png)
 ![Docusaurus logo](/img/img-exception-error.png)
 
-### Handle Exceptions 
+### Handle Exceptions
 
 - Winston memiliki fitur secara otomatis yang bisa digunakan untuk menangkap Exception yang belum ter-handle
 - Kita bisa lakukan pengaturan ini di Logger, yang secara otomatis exception akan dikirim ke semua Transport
 - Atau kita bisa lakukan pengaturan ini di Transport
 
 ```js title="hello.js"
-hello()
+hello();
 ```
 
 ```js
@@ -325,7 +329,6 @@ const logger = winston.createLogger({
       // highlight-end
       filename: 'exception.log',
     }),
-    
   ],
 });
 ```
@@ -339,7 +342,7 @@ async function callAsync() {
   return Promise.reject('Ups!!');
 }
 
-callAsync()
+callAsync();
 ```
 
 ```js
@@ -358,8 +361,9 @@ const logger = winston.createLogger({
 ```
 
 :::tip[Tips]
+
 - Anda bisa langsung menggabungkan antara exceptions dan rejections
-:::
+  :::
 
 ```js
 const logger = winston.createLogger({

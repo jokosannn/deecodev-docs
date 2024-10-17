@@ -39,7 +39,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/jokosannn/code-documentation/tree/main/',
+          editUrl: 'https://github.com/cothecraftz/cothecraftz-docs/tree/main/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -68,7 +68,7 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/kotheartz',
+          href: 'https://github.com/cothecraftz',
           label: 'GitHub',
           position: 'right',
         },
