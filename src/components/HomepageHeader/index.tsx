@@ -1,11 +1,11 @@
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import Heading from '@theme/Heading';
-import { translate } from '@docusaurus/Translate';
-import useBaseUrl from '@docusaurus/useBaseUrl';
+import Link from "@docusaurus/Link";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import Heading from "@theme/Heading";
+import { translate } from "@docusaurus/Translate";
+import useBaseUrl from "@docusaurus/useBaseUrl";
 
-import clsx from 'clsx';
-import styles from './styles.module.css';
+import clsx from "clsx";
+import styles from "./styles.module.css";
 
 function TopBanner() {
   return (
@@ -24,21 +24,21 @@ function HeroBanner() {
       <div className={styles.heroInner}>
         <Heading as="h1" className={styles.heroProjectTagline}>
           <img
-            alt={translate({ message: 'Docusaurus with Keytar' })}
+            alt={translate({ message: "Docusaurus with Keytar" })}
             className={styles.heroLogo}
-            src={useBaseUrl('/img/kotheartz.png')}
+            src={useBaseUrl("/img/cothecraftz.png")}
             width="200"
             height="200"
           />
           <span
-            className={clsx('md:leading-[65px]', styles.heroTitleTextHtml)}
+            className={clsx("md:leading-[65px]", styles.heroTitleTextHtml)}
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
               __html: translate({
-                id: 'homepage.hero.title',
+                id: "homepage.hero.title",
                 message:
-                  'Explore step-by-step <b>guides</b>, <b>references</b>, and <b>examples</b> code usage.',
-                description: 'Home page hero title, can contain simple html tags',
+                  "Explore step-by-step <b>guides</b>, <b>references</b>, and <b>examples</b> code usage.",
+                description: "Home page hero title, can contain simple html tags",
               }),
             }}
           />

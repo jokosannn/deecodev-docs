@@ -6,7 +6,7 @@ sidebar_position: 2
 
 NodeJS NPM - Node Package Manager
 
-Slide : https://docs.google.com/presentation/d/1-L4Nce46UlQa_drWGgQSrALsefX1cKs8
+Slide PPT : https://docs.google.com/presentation/d/1-L4Nce46UlQa_drWGgQSrALsefX1cKs8
 
 ## Pengenalan Node Package Manager
 
@@ -31,7 +31,6 @@ Slide : https://docs.google.com/presentation/d/1-L4Nce46UlQa_drWGgQSrALsefX1cKs8
 npm --version
 ```
 
-
 ## File package.json
 
 - Saat kita melakukan management project menggunakan NPM
@@ -40,6 +39,7 @@ npm --version
 - Kita bisa buat file package.json secara manual, atau menggunakan auto generate secara otomatis menggunakan NPM
 
 Otomatis membuat file `package.json`
+
 ```bash
 npm init -y
 ```
@@ -58,19 +58,6 @@ npm init -y
   "license": "ISC"
 }
 ```
-{/* 
-| Attribute    | Description              |
-| ------------ | ------------------------ |
-| name         | Nama project / package   |
-| version      | Versi project            |
-| description  | Deskripsi project        |
-| homepage     | Home page project        |
-| author       | Author project           |
-| contributors | Nama kontributor project |
-| main         | Entry point package      |
-| keywords     | Keyword Project          |
-| lisensi      | Lisensi project          |
-| repository   | Repository project       | */}
 
 ## Project Type
 
@@ -143,7 +130,6 @@ npm run dev
 - Attribute main adalah entry point yang akan di-load ketika kita me-load NodeJS Project / Package
 - Pada kasus ketika kita membuat aplikasi, mungkin tidak terlalu berguna, tapi pada kasus ketika kita membuat library yang akan digunakan di banyak project, baru attribute main ini akan terlihat kegunaanya
 
-
 ```json title="package.json"
 {
   "name": "project-name",
@@ -151,7 +137,7 @@ npm run dev
   "description": "",
   "type": "module",
   // highlight-start
-  "main": "index.js",
+  "main": "index.js"
   // highlight-end
   // ...
 }
@@ -173,7 +159,7 @@ npm run dev
   "exports": {
     ".": "./index.js",
     "./write": "./write.js"
-  },
+  }
   // highlight-end
   // ...
 }
@@ -183,15 +169,15 @@ npm run dev
 
 - Untuk menggunakan module yang sudah di export, kita cukup gunakan import dari nama module yang di export tersebut, namun ganti tanda . (titik) dengan nama package yang ada di package.json
 
-- Misal: 
+- Misal:
 
 `“.”` menjadi `“belajar-nodejs-npm”`
 
 `“./write”` menjadi `“belajar-nodejs-npm/write”`
 
 ```js title="export.js"
-import { summAll } from "node-library" // '.'
-import { riteToFile } from "node-library/write" // './write'
+import { summAll } from "node-library"; // '.'
+import { riteToFile } from "node-library/write"; // './write'
 ```
 
 ## Dependency Management
@@ -205,26 +191,27 @@ import { riteToFile } from "node-library/write" // './write'
 
 ```bash title="terminal"
 npm install nama-package@version
-npm i nama-package@version 
+npm i nama-package@version
 ```
 
 ### Install Dependency Production
 
 ```bash title="terminal"
-npm install --production 
+npm install --production
 ```
 
 ### Install Dependency Development
 
 ```bash title="terminal"
 npm install nama-package@version --save-dev
-npm i -D nama-package@version 
+npm i -D nama-package@version
 ```
 
 :::tip
+
 - `dependencies` adalah package yang dibutuhkan oleh aplikasi di lingkungan runtime atau production, tanpa package ini aplikasi kita tidak akan bekerja dengan semestinya.
 - `devDependencies` adalah package yang dibutuhkan oleh aplikasi di lingkungan development dan testing. Biasanya package di devDependencies dibutuhkan untuk development namun tidak dibutuhkan ketika aplikasi dirilis ke costumer
-:::
+  :::
 
 ## Dependency Version
 
@@ -232,14 +219,12 @@ npm i -D nama-package@version
 
 - NodeJS merekomendasikan menggunakan semantic version dalam menentukan format version pada package yang kita buat
 - Jika kita perhatikan, kebanyakan package di [NPM](https://www.npmjs.com/) menggunakan semantic version
-- Web Semantic versioning : https://semver.org/ 
+- Web Semantic versioning : https://semver.org/
 - Versi semantik ditulis dalam bentuk `MAJOR.MINOR.PATCH`.
 - Aturan semantic version:
   - Jika `mengubah fitur`, dan melakukan code break, upgrade versi `MAJOR`
   - Jika `menambah fitur`, tidak ada code break, upgrade versi `MINOR`
   - Jika `melakukan bugfix`, tidak ada code break, upgrade versi `PATCH`
-
-
 
 | Versi | Keterangan                                                                             |
 | ----- | -------------------------------------------------------------------------------------- |
@@ -264,6 +249,7 @@ Next, login ke Web NPM dengan menggunakan perintah :
 ```bash title="terminal"
 npm adduser
 ```
+
 Setelah login, sekarang kita bisa melakukan publish package ke web NPM dengan menggunakan perintah :
 
 ```bash title="terminal"
@@ -308,4 +294,3 @@ Atau jika kita ingin melakukan update semua dependency, gunakan perintah:
 ```bash
 npm update
 ```
-

@@ -2,14 +2,14 @@
 sidebar_position: 1
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # Basics
 
 NodeJS Dasar
 
-Slide : https://docs.google.com/presentation/d/1-1dUV22id_QR4FbWPrR0NzQFnAr6VQVI
+Slide PPT : https://docs.google.com/presentation/d/1-1dUV22id_QR4FbWPrR0NzQFnAr6VQVI
 
 ## Pengenalan NodeJS
 
@@ -91,7 +91,7 @@ Karena NodeJS tidak memerlukan Web Browser, jadi kita bisa langsung menjalankan 
 Buat file `hello-world.js`
 
 ```js title="hello-world.js"
-console.log('Hello World');
+console.log("Hello World");
 ```
 
 Next, Jalankan dengan perintah di `terminal / command promt`:
@@ -126,7 +126,7 @@ OS merupakan standard library yang bisa digunakan untuk mendapatkan informasi te
 https://nodejs.org/dist/latest-v16.x/docs/api/os.html
 
 ```js title="os.mjs"
-import os from 'os';
+import os from "os";
 
 console.info(os.platform());
 console.info(os.arch());
@@ -140,9 +140,9 @@ Path merupakan standard library yang bisa kita gunakan untuk bekerja dengan loka
 https://nodejs.org/dist/latest-v16.x/docs/api/path.html
 
 ```js title="path.mjs"
-import path from 'node:path';
+import path from "node:path";
 
-const file = '/Users/joko/index.html';
+const file = "/Users/joko/index.html";
 
 console.info(path.dirname(file));
 console.info(path.basename(file));
@@ -163,33 +163,33 @@ https://nodejs.org/dist/latest-v16.x/docs/api/fs.html
 #### Promise
 
 ```js title="fs-promise.mjs"
-import * as fs from 'node:fs/promises';
+import * as fs from "node:fs/promises";
 
-const readFile = await fs.readFile('src/async.mjs', 'utf-8');
+const readFile = await fs.readFile("src/async.mjs", "utf-8");
 console.log(readFile);
 
-await fs.writeFile('txt/temp.txt', 'Hello Nodejs!!', 'utf-8');
-console.log('success create file temp.txt');
+await fs.writeFile("txt/temp.txt", "Hello Nodejs!!", "utf-8");
+console.log("success create file temp.txt");
 ```
 
 #### sync
 
 ```js title="fs-sync.mjs"
-import * as fs from 'node:fs';
+import * as fs from "node:fs";
 
-const readFile = fs.readFileSync('src/async.mjs', 'utf-8');
+const readFile = fs.readFileSync("src/async.mjs", "utf-8");
 console.log(readFile);
 
-await fs.writeFileSync('txt/temp.txt', 'Hello Nodejs!!', 'utf-8');
-console.log('success create file temp.txt');
+await fs.writeFileSync("txt/temp.txt", "Hello Nodejs!!", "utf-8");
+console.log("success create file temp.txt");
 ```
 
 #### Callback
 
 ```js title="fs-callback.mjs"
-import * as fs from 'node:fs';
+import * as fs from "node:fs";
 
-fs.readFile('/tmp/hello.txt', (data, err) => {
+fs.readFile("/tmp/hello.txt", (data, err) => {
   if (err) throw err;
   console.log(data);
 });
@@ -230,9 +230,9 @@ DNS merupakan standard library yang bisa digunakan untuk bekerja dengan DNS (dom
 https://nodejs.org/dist/latest-v16.x/docs/api/dns.html
 
 ```js title="dns.mjs"
-import dns from 'node:dns/promises';
+import dns from "node:dns/promises";
 
-const data = await dns.resolve4('www.youtube.com');
+const data = await dns.resolve4("www.youtube.com");
 let hostname = [];
 data.forEach((e, host) => {
   hostname.push({ e, host });
@@ -249,21 +249,21 @@ console.log(hostname);
 https://nodejs.org/dist/latest-v16.x/docs/api/events.html
 
 ```js title="event.mjs"
-import { EventEmitter } from 'node:events';
+import { EventEmitter } from "node:events";
 
 const emiter = new EventEmitter();
 
 // addListener(:eventName, :listener)
-emiter.addListener('hello', (name) => {
+emiter.addListener("hello", (name) => {
   console.info(`hello ${name}`);
 });
 
-emiter.addListener('hello', (name) => {
+emiter.addListener("hello", (name) => {
   console.info(`hallo ${name}`);
 });
 
 // emit(eventName, args)
-emiter.emit('hello', 'joko');
+emiter.emit("hello", "joko");
 ```
 
 ### Global
@@ -275,7 +275,7 @@ https://nodejs.org/dist/latest-v16.x/docs/api/globals.html
 
 ```js title="global.mjs"
 setTimeout(() => {
-  console.log('nunggu 2d baru muncul');
+  console.log("nunggu 2d baru muncul");
 }, 2000);
 ```
 
@@ -287,10 +287,10 @@ setTimeout(() => {
 https://nodejs.org/dist/latest-v16.x/docs/api/process.html
 
 ```js title="process.mjs"
-import process from 'node:process';
+import process from "node:process";
 
-process.addListener('exit', (exitCode) => {
-  console.log('Exit code' + exitCode);
+process.addListener("exit", (exitCode) => {
+  console.log("Exit code" + exitCode);
 });
 
 console.info(process.version);
@@ -300,7 +300,7 @@ console.info(process.env.USERNAME);
 process.exit(1);
 
 // hello tidak akan di eksekusi
-console.log('hello');
+console.log("hello");
 ```
 
 ### Readline
@@ -312,11 +312,11 @@ console.log('hello');
 https://nodejs.org/dist/latest-v16.x/docs/api/readline.html
 
 ```js title="readline.mjs"
-import * as readline from 'node:readline/promises';
-import { stdin as input, stdout as output } from 'node:process';
+import * as readline from "node:readline/promises";
+import { stdin as input, stdout as output } from "node:process";
 
 const rl = readline.createInterface({ input, output });
-const answer = await rl.question('siapa nama Anda? ');
+const answer = await rl.question("siapa nama Anda? ");
 console.log(`nama saya ${answer}`);
 
 rl.close();
@@ -329,16 +329,16 @@ Report merupakan fitur yang terdapat di NodeJS untuk membuat laporan secara otom
 https://nodejs.org/dist/latest-v16.x/docs/api/report.html
 
 ```js title="report"
-import * as readline from 'node:readline/promises';
-import process from 'node:process';
+import * as readline from "node:readline/promises";
+import process from "node:process";
 
 process.report.reportOnUncaughtException = true;
 process.report.reportOnFatalError = true;
 process.report.reportOnSignal = true;
-process.report.filename = 'data/report-error.json';
+process.report.filename = "data/report-error.json";
 
 function newError() {
-  throw new Error('Upss!!!');
+  throw new Error("Upss!!!");
 }
 
 newError();
@@ -352,7 +352,7 @@ newError();
 https://nodejs.org/dist/latest-v16.x/docs/api/buffer.html
 
 ```js title="buffer.js"
-const buffer = Buffer.from('Joko Santoso');
+const buffer = Buffer.from("Joko Santoso");
 
 console.info(buffer);
 console.info(buffer.toString());
@@ -367,14 +367,14 @@ console.log(buffer.toString());
 - Ada banyak encoding yang didukung oleh Buffer, misal utf8, ascii, hex, base64, base64url dan lain-lain
 
 ```js title="buffer-encoding.js"
-const buffer = Buffer.from('Joko Santoso', 'utf-8');
+const buffer = Buffer.from("Joko Santoso", "utf-8");
 
 console.info(buffer.toString());
-console.info(buffer.toString('base64'));
-console.info(buffer.toString('hex'));
+console.info(buffer.toString("base64"));
+console.info(buffer.toString("hex"));
 
-const bufferBase64 = Buffer.from('Sm9rbyBTYW50b3Nv', 'base64');
-console.info(bufferBase64.toString('utf-8'));
+const bufferBase64 = Buffer.from("Sm9rbyBTYW50b3Nv", "base64");
+console.info(bufferBase64.toString("utf-8"));
 ```
 
 ### Stream
@@ -386,18 +386,18 @@ console.info(bufferBase64.toString('utf-8'));
 https://nodejs.org/dist/latest-v16.x/docs/api/stream.html
 
 ```js title="stream.mjs"
-import fs from 'node:fs';
+import fs from "node:fs";
 
-const writer = fs.createWriteStream('data/target-stream.log');
-writer.write('Joko\n');
-writer.write('Santoso\n');
-writer.write('Ganteng\n');
+const writer = fs.createWriteStream("data/target-stream.log");
+writer.write("Joko\n");
+writer.write("Santoso\n");
+writer.write("Ganteng\n");
 
 writer.end();
 
-const reader = fs.createReadStream('data/target-stream.log');
+const reader = fs.createReadStream("data/target-stream.log");
 
-reader.addListener('data', (data) => {
+reader.addListener("data", (data) => {
   console.info(data.toString());
 });
 ```
@@ -411,7 +411,7 @@ reader.addListener('data', (data) => {
 https://nodejs.org/dist/latest-v16.x/docs/api/timers.htmlj
 
 ```js title="timer.mjs"
-import { setInterval } from 'node:timers/promises';
+import { setInterval } from "node:timers/promises";
 
 // global
 setInterval(() => {
@@ -438,28 +438,28 @@ https://nodejs.org/dist/latest-v16.x/docs/api/net.html
 #### Net Server
 
 ```js title="net-server.mjs"
-import net from 'net';
+import net from "net";
 
 const server = net.createServer((c) => {
-  console.log('client conected!');
+  console.log("client conected!");
 
-  c.on('data', (data) => {
-    console.log('Data: ' + data.toString());
+  c.on("data", (data) => {
+    console.log("Data: " + data.toString());
     c.write(`hello ${data.toString()}\r\n`);
   });
 });
 
-server.listen(3000, 'localhost');
+server.listen(3000, "localhost");
 ```
 
 #### Net Client
 
 ```js title="net-client.mjs"
-import net from 'net';
+import net from "net";
 
-const client = net.createConnection({ port: 3000, host: 'localhost' });
+const client = net.createConnection({ port: 3000, host: "localhost" });
 
-client.addListener('data', (data) => {
+client.addListener("data", (data) => {
   console.info(`data from server : ${data.toString()}`);
 });
 
@@ -475,11 +475,11 @@ URL merupakan standard library untuk bekerja dengan URL
 https://nodejs.org/dist/latest-v16.x/docs/api/url.html
 
 ```js title="url.mjs"
-import { URL } from 'node:url';
+import { URL } from "node:url";
 
-const myUrl = new URL('https://codesann.com/profile?age=21');
+const myUrl = new URL("https://codesann.com/profile?age=21");
 
-myUrl.searchParams.append('country', 'indonesia');
+myUrl.searchParams.append("country", "indonesia");
 
 console.info(myUrl);
 
@@ -511,10 +511,10 @@ URL {
 https://nodejs.org/dist/latest-v16.x/docs/api/console.html
 
 ```js title="console.mjs"
-import { Console } from 'console';
-import fs from 'node:fs';
+import { Console } from "console";
+import fs from "node:fs";
 
-const file = fs.createWriteStream('data/console.log');
+const file = fs.createWriteStream("data/console.log");
 
 const log = new Console({
   stdout: file,
@@ -522,12 +522,12 @@ const log = new Console({
 });
 
 const person = {
-  name: 'Joko Santoso',
+  name: "Joko Santoso",
   age: 21,
 };
 
-log.info('hello world');
-log.error('Error: hello world');
+log.info("hello world");
+log.error("Error: hello world");
 log.table(person);
 ```
 
@@ -543,29 +543,29 @@ log.table(person);
 1. [HTTPS](https://nodejs.org/dist/latest-v16.x/docs/api/https.html)
 
 ```js title="http-client.mjs"
-import http from 'http';
+import http from "http";
 
-const url = 'https://eofeih3io4xch6p.m.pipedream.net';
+const url = "https://eofeih3io4xch6p.m.pipedream.net";
 
 const request = http.request(
   url,
   {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'Aplication/json',
-      Accept: 'Application/json',
+      "Content-Type": "Aplication/json",
+      Accept: "Application/json",
     },
   },
   (response) => {
-    response.addListener('data', (data) => {
-      console.log('Data :' + data);
+    response.addListener("data", (data) => {
+      console.log("Data :" + data);
     });
   }
 );
 
 const data = JSON.stringify({
-  firstName: 'joko',
-  lastName: 'santoso',
+  firstName: "joko",
+  lastName: "santoso",
 });
 
 request.write(data);
@@ -580,35 +580,35 @@ request.end();
 https://nodejs.org/dist/latest-v16.x/docs/api/http.html
 
 ```js title="http-server.mjs"
-import http from 'node:http';
-import url from 'node:url';
+import http from "node:http";
+import url from "node:url";
 
 const server = http.createServer((req, res) => {
   const Url = url.parse(req.url, true);
 
-  if (Url.pathname === '/product') {
+  if (Url.pathname === "/product") {
     console.info(Url.query); /* {id: '1'} */
 
-    res.writeHead(200, 'sucess', {
-      'Content-Type': 'Application/json',
-      accept: 'Application/json',
+    res.writeHead(200, "sucess", {
+      "Content-Type": "Application/json",
+      accept: "Application/json",
     });
-    res.end('hello from product');
+    res.end("hello from product");
   } else {
-    if (req.method === 'POST') {
-      req.addListener('data', (data) => {
-        res.writeHead(200, 'sucess', {
-          'Content-Type': 'Application/json',
-          accept: 'Application/json',
+    if (req.method === "POST") {
+      req.addListener("data", (data) => {
+        res.writeHead(200, "sucess", {
+          "Content-Type": "Application/json",
+          accept: "Application/json",
         });
         res.end(data);
       });
     } else {
-      res.writeHead(200, 'sucess', {
-        'Content-Type': 'Application/json',
-        accept: 'Application/json',
+      res.writeHead(200, "sucess", {
+        "Content-Type": "Application/json",
+        accept: "Application/json",
       });
-      res.end('hello from server');
+      res.end("hello from server");
     }
   }
 });

@@ -2,14 +2,14 @@
 sidebar_position: 4
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # Logging
 
 NodeJS Logging
 
-Slide: https://docs.google.com/presentation/d/1-6kKXVX4-oknq0Hvawypgq58Rtazbr5X
+Slide PPT: https://docs.google.com/presentation/d/1-6kKXVX4-oknq0Hvawypgq58Rtazbr5X
 
 ## Pengenalan Logging
 
@@ -68,7 +68,7 @@ Next, import it into your Node.js application:
 const logger = winston.createLogger({
   // ...
 });
-logger.log('something!!!');
+logger.log("something!!!");
 ```
 
 ## Console Transport
@@ -126,9 +126,9 @@ const logger = winston.createLogger({
 :::
 
 ```js
-logger.log('...'); // bofore
+logger.log("..."); // bofore
 // highlight-start
-logger.debug('...'); //after
+logger.debug("..."); //after
 // highlight-end
 // other logger
 ```
@@ -177,7 +177,7 @@ const logger = winston.createLogger({
 
 ```js
 const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'debug',
+  level: process.env.LOG_LEVEL || "debug",
   // highlight-start
   format: winston.format.printf((info) => {
     return `${new Date()} : ${info.level.toUpperCase()} : ${info.message}`;
@@ -195,7 +195,7 @@ const logger = winston.createLogger({
 
 ```js
 const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'debug',
+  level: process.env.LOG_LEVEL || "debug",
   // highlight-start
   format: winston.format.combine(winston.format.timestamp(), winston.format.ms(), winston.format.json()),
   // highlight-end
@@ -217,7 +217,7 @@ const logger = winston.createLogger({
     // highlight-start
     new winston.transports.Console({}),
     new winston.transports.File({
-      filename: 'transport.log',
+      filename: "transport.log",
     }),
     // highlight-end
   ],
@@ -282,7 +282,7 @@ npm install winston-daily-rotate-file
 Next
 
 ```js
-import DailyRotateFile from 'winston-daily-rotate-file';
+import DailyRotateFile from "winston-daily-rotate-file";
 
 const logger = winston.createLogger({
   // ...
@@ -290,10 +290,10 @@ const logger = winston.createLogger({
     new winston.transports.Console({}),
     // highlight-start
     new DailyRotateFile({
-      filename: 'app-%DATE%.log',
+      filename: "app-%DATE%.log",
       zippedArchive: true,
-      maxSize: '1m', // 1 mega
-      maxFiles: '14d', // 14 hari
+      maxSize: "1m", // 1 mega
+      maxFiles: "14d", // 14 hari
     }),
     // highlight-end
   ],
@@ -327,7 +327,7 @@ const logger = winston.createLogger({
       // highlight-start
       handleExceptions: true,
       // highlight-end
-      filename: 'exception.log',
+      filename: "exception.log",
     }),
   ],
 });
@@ -339,7 +339,7 @@ const logger = winston.createLogger({
 
 ```js title="async.js"
 async function callAsync() {
-  return Promise.reject('Ups!!');
+  return Promise.reject("Ups!!");
 }
 
 callAsync();
@@ -354,7 +354,7 @@ const logger = winston.createLogger({
       // highlight-start
       handleRejections: true,
       // highlight-end
-      filename: 'exception.log',
+      filename: "exception.log",
     }),
   ],
 });
@@ -375,7 +375,7 @@ const logger = winston.createLogger({
       handleExceptions: true,
       handleRejections: true,
       // highlight-end
-      filename: 'exception.log',
+      filename: "exception.log",
     }),
   ],
 });
