@@ -135,7 +135,7 @@ npx jest
 - test() memiliki parameter nama unit test dan juga function yang berisi kode unit test nya
 
 ```js title="name.test.js"
-test('should ...', () => {
+test("should ...", () => {
   // some code
 });
 ```
@@ -145,6 +145,8 @@ test('should ...', () => {
 - Jest memiliki banyak konfigurasi, namun jika kita tidak ubah konfigurasinya, Jest sudah memiliki default konfigurasi
 - Ada banyak sekali konfigurasi yang terdapat di Jest, kita akan bahas sambil berjalan, dan yang memang diperlukan saja
 - Jest sendiri mendukung dua cara untuk menyimpan data konfigurasi
+
+Detail Konfigurasi : https://jestjs.io/docs/configuration
 
 1. Pertama, menyimpan di file `package.json` dengan key `jest`
 
@@ -176,3 +178,464 @@ Jika menggungkan konfigurasi menggunakan file `jest.config.js/ts/mjs`, jangan lu
 :::
 
 Konfigurasi di Jest sangat sederhana, cukup gunakan key-value, dimana kita bisa melihat semua konfigurasi key yang tersedia dan kegunaannya di halaman https://jestjs.io/docs/configuration
+
+## Matchers
+
+Saat kita membuat unit test, hal yang dilakukan adalah kita biasanya memiliki ekspektasi
+Contoh pada kode sum() sebelumnya, ketika kita panggil function sum() dengan parameter 1 dan 2, ekspektasi kita adalah hasil return dari function sum() tersebut adalah 3
+Di Jest, hal ini dinamakan `Matchers`
+
+Detail : https://jestjs.io/docs/using-matchers
+
+### Expect Function
+
+- Matchers di Jest direpresentasikan dalam sebuah function bernama `expect(value)`
+- Function `expect()` mengembalikan object Matchers, yang bisa kita gunakan untuk mengetest value yang kita `expect()`
+- Ada banyak sekali function untuk melakukan test di Matchers, kita bisa baca detail nya di halaman dokumentasi API untuk function `expect()`
+
+Detail : https://jestjs.io/docs/expect
+
+```js
+export const sum = (first, second) => {
+  return first + second;
+};
+
+// code testing
+test("test sum function", () => {
+  const result = sum(1, 2);
+  // highlight-start
+  expect(result).toBe(3);
+  // highlight-end
+});
+```
+
+### Equals Matchers
+
+- Salah satu Matchers yang biasa digunakan ketika membuat unit test adalah equals matchers
+- Ini digunakan untuk memastikan bahwa data sesuai atau sama dengan ekspektasi kita
+
+| Function                        | Keterangan                                                                                                            |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| expect(value).toBe(expected)    | Value sama dengan expected, biasanya digunakan untuk value bukan object                                               |
+| expect(value).toEqual(expected) | Value sama dengan expected, dimana membandingkan semua properties secara recursive, atau dikenal dengan deep equality |
+
+```js
+// toBe()
+expect(hello).toBe("hello joko");
+
+// toEqual()
+expect(person).toEqual({ id: 1, name: "joko santoso" });
+```
+
+:::note
+
+- `toEquel()` biasanya untuk value yang bernilai object , array, dll
+  :::
+
+### Truthiness Matchers
+
+- Dalam unit test, kadang kita ingin membedakan antara undefined, null dan false.
+- Dan kadang kita ingin melakukan ekspektasi nilai tersebut
+- Jest memiliki matchers untuk melakukan hal tersebut juga
+
+| Function                      | Keterangan                                                           |
+| ----------------------------- | -------------------------------------------------------------------- |
+| expect(value).toBeNull()      | Memastikan value adalah null                                         |
+| expect(value).toBeUndefined() | Memastikan value adalah undefined                                    |
+| expect(value).toBeDefined()   | Kebalikan dari toBeUndefined()                                       |
+| expect(value).toBeTruthy()    | Memastikan value bernilai apapun, asal if statement menganggap true  |
+| expect(value).toBeFalsy()     | Memastikan value bernilai apapun, asal if statement menganggap false |
+
+```js
+test("truthiness matcher", () => {
+  let value = null;
+  expect(value).toBeDefined();
+  expect(value).toBeNull();
+  expect(value).toBeFalsy();
+
+  value = undefined;
+  expect(value).toBeUndefined();
+  expect(value).toBeFalsy();
+
+  value = "Joko";
+  expect(value).toBe("Joko");
+  expect(value).toBeTruthy();
+});
+```
+
+### Numbers Matchers
+
+- Jest juga memiliki matchers untuk digunakan untuk value berupa number
+- Ketika value berupa number, kita juga bisa menggunakan `toBe()` dan `toEqual()`, untuk memastikan bahwa number bernilai sama dengan expected
+
+| Function                   | Keterangan                                      |
+| -------------------------- | ----------------------------------------------- |
+| .toBeGreaterThan(n)        | Memastikan value lebih besar dari n             |
+| .toBeGreaterThanOrEqual(n) | Memastikan value lebih besar atau sama dengan n |
+| .toBeLessThan(n)           | Memastikan value lebih kecil dari n             |
+| .toBeLessThanOrEqual(n)    | Memastikan value lebih kecil atau sama dengan n |
+
+```js
+test("numbers matcher", () => {
+  const value = 2 + 2;
+
+  expect(value).toBeGreaterThan(3);
+  expect(value).toBeGreaterThanOrEqual(4);
+
+  expect(value).toBeLessThan(5);
+  expect(value).toBeLessThanOrEqual(4);
+
+  expect(value).toBe(4);
+});
+```
+
+### Strings Matchers
+
+- Jest juga memiliki matchers function yang digunakan untuk value berupa String
+- Jika kita ingin memastikan sebuah string sama, kita bisa gunakan `toBe()` atau `toEqual()`
+- Namun kita bisa menggunakan `toMatch(regex)` untuk memastikan value sesuai dengan regex
+
+```js
+test("string matcher", () => {
+  const name = "Joko Santoso";
+
+  expect(name).toBe("Joko Santoso");
+  expect(name).toMatch(/San/);
+});
+```
+
+### Arrays Matchers
+
+- Jest juga memiliki function yang bisa kita gunakan untuk mengecek data di dalam sebuah value array
+- Jika ingin memastikan bahwa array sama, kita bisa menggunakan `toEqual()`
+
+| Function              | Keterangan                                                                         |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| .toContain(item)      | Memastikan value array memiliki item, dimana pengecekan item menggunakan toBe()    |
+| .toContainEqual(item) | Memastikan value array memiliki item, dimana pengecekan item menggunakan toEqual() |
+
+```js
+test("array simpel", () => {
+  const names = ["joko", "roy", "samsul"];
+
+  expect(names).toEqual(["joko", "roy", "samsul"]);
+  expect(names).toContain("joko");
+});
+
+test("array object", () => {
+  const persons = [{ name: "joko" }, { name: "roy" }, { name: "samsul" }];
+
+  expect(persons).toEqual([{ name: "joko" }, { name: "roy" }, { name: "samsul" }]);
+  expect(persons).toContainEqual({ name: "joko" });
+});
+```
+
+### Exceptions Matchers
+
+- Saat membuat kode program, kadang kita sering membuat exception
+- Dalam unit test pun, kadang kita berharap sebuah exception terjadi
+- Jest juga memiliki matchers untuk melakukan pengecekan exception
+- Khusus untuk jenis matchers exception, kita perlu menggunakan `closure` function di value `expect()` nya, hal ini untuk memastikan exception ditangkap oleh matchers, jika tidak menggunakan closure function, maka exception akan terlanjur terjadi sebelum kita memanggil expect() function
+
+| Function            | Keterangan                                                    |
+| ------------------- | ------------------------------------------------------------- |
+| .toThrow()          | Memastikan terjadi exception apapu                            |
+| .toThrow(exception) | Memastikan terjadi exception sesuai dengan expected exception |
+| .toThrow(message)   | Memastikan terjadi exception sesuai dengan string message     |
+
+```js
+export class MyException extends Error {}
+
+export const callMe = (name) => {
+  if (name === "Joko") {
+    throw new MyException("Ups my exception heppens!");
+  } else {
+    return "Ok";
+  }
+};
+
+test("exception", () => {
+  //! callMe('Joko');
+  //! expect(callMe('Joko'));
+
+  expect(() => callMe("Joko")).toThrow();
+  expect(() => callMe("Joko")).toThrow(MyException);
+  expect(() => callMe("Joko")).toThrow("Ups my exception heppens!");
+});
+```
+
+### Not Matchers
+
+- Saat melakukan pengecekan menggunakan matchers, kadang-kadang kita ingin melakukan pengecekan kebalikannya
+- Misal tidak sama dengan, tidak lebih dari, tidak contains, dan lain-lain
+- Jest memiliki fitur untuk melakukan “not” di Matchers nya, dengan menggunakan property `not` di matchers, secara otomatis kita akan melakukan pengecekan kebalikannya
+- Semua jenis matchers yang sudah kita bahas, mendukung property not ini
+
+```js
+test("string.not", () => {
+  const name = "Joko Santoso";
+
+  expect(name).not.toBe("Eko");
+  expect(name).not.toEqual("Eko");
+  expect(name).not.toMatch(/Eko/);
+});
+
+test("number.not", () => {
+  const value = 2 + 2;
+
+  expect(value).not.toBeGreaterThan(6);
+  expect(value).not.toBeLessThan(3);
+  expect(value).not.toBe(10);
+});
+```
+
+## Test Async Code
+
+- Saat membuat kode program JavaScript, penggunaan kode asynchronous pasti sering kita gunakan, baik itu menggunakan Promise atau menggunakan Async Await
+- Jest terintegrasi dengan baik jika kita ingin melakukan pengetesan terhadap kode yang async
+- Namun saat kita melakukan pengetesan kode async, kita harus memberi tahu ke Jest, hal ini agar Jest tahu dan bisa menunggu kode async nya, sebelum melanjutkan ke unit test selanjutnya
+- Caranya sebenarnya sangat mudah, kita cukup gunakan `async` code di closure function Jest
+
+```js
+export const sayHelloAsync = (name) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (name) {
+        resolve(`Hello ${name}`);
+      } else {
+        reject("name harus ada.");
+      }
+    }, 1000);
+  });
+};
+
+test("async function", async () => {
+  const result = await sayHelloAsync("Joko");
+  expect(result).toBe("Hello Joko");
+});
+
+test("async mathers", async () => {
+  await expect(sayHelloAsync("Joko")).resolves.toBe("Hello Joko"); // resolve
+  await expect(sayHelloAsync()).rejects.toBe("name harus ada."); // reject
+});
+```
+
+### async Matchers
+
+- Sebelumnya kita menggunakan async await untuk melakukan matchers, sebenarnya Jest juga memiliki fitur matchers terhadap data async atau Promise
+- Hal ini mempermudah kita ketika ingin melakukan matchers, sehingga tidak perlu melakukan await pada async function nya
+- Semua Async Matchers mengembalikan `Promise`
+
+| Function                 | Keterangan                                                                                   |
+| ------------------------ | -------------------------------------------------------------------------------------------- |
+| expect(promise).resolves | Ekspektasi bahwa promise sukses, dan selanjutnya kita bisa gunakan Matchers function lainnya |
+| expect(promise).rejects  | Ekspektasi bahwa promise gagal, dan selanjutnya kita bisa gunakan Matchers function lainnya  |
+
+```js
+test("async mathers", async () => {
+  await expect(sayHelloAsync("Joko")).resolves.toBe("Hello Joko"); // resolve
+  await expect(sayHelloAsync()).rejects.toBe("name harus ada."); // reject
+});
+```
+
+## Setup Function
+
+- Kadang saat membuat unit test, kita membuat kode yang perlu dibuat sebelum unit test berjalan
+- Selain itu, kadang kita juga kita membuat kode yang perlu dilakukan setelah unit test berjalan
+- Jest memiliki fitur untuk menangani kasus seperti ini
+
+| Function             | Keterangan                                                                                                                                    |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| beforeEach(function) | Function akan dieksekusi sebelum unit test berjalan, jika terdapat lima unit test dalam file, artinya akan dieksekusi juga sebanyak lima kali |
+| afterEach(function)  | Function akan dieksekusi setelah unit test selesai, jika terdapat lima unit test dalam file, artinya akan dieksekusi juga sebanyak lima kali  |
+
+```js
+beforeEach(() => {
+  console.log("Befor Each");
+});
+
+afterEach(() => {
+  console.log("After Each");
+});
+```
+
+- Namun kadang-kadang, kita ingin membuat kode yang hanya dieksekusi sekali saja dalam sebuah file unit test
+- Sekali sebelum semua unit test Dan sekali setelah semua unit test
+- Jest juga menyediakan fitur tersebut
+
+| Function            | Keterangan                                                                         |
+| ------------------- | ---------------------------------------------------------------------------------- |
+| beforeAll(function) | Function akan dieksekusi sekali sebelum semua unit test berjalan di file unit test |
+| afterAll(function)  | Function akan dieksekusi sekali setelah semua unit test selesai di file unit test  |
+
+```js
+beforeAll(() => {
+  console.log("Before All");
+});
+
+afterAll(() => {
+  console.log("After All");
+});
+```
+
+## Scoping
+
+- Saat kita menggunakan Setup Function, secara default akan dieksekusi pada setiap `test()` function yang terdapat di file unit test
+- Jest memiliki fitur scoping atau grouping, dimana kita bisa membuat group unit test menggunakan function `describe()`
+- Setup Function yang dibuat di dalam describe() hanya digunakan untuk unit test di dalam describe() tersebut
+- Namun Setup Function diluar describe() secara otomatis juga digunakan di dalam describe()
+
+```js
+beforeAll(() => console.log("Before All Outer"));
+afterAll(() => console.log("After All Outer"));
+beforeEach(() => console.log("Befor Each Outer"));
+afterEach(() => console.log("After Each Outer"));
+
+test("Test Outer", () => console.log("Test Outer"));
+
+describe("Inner", () => {
+  beforeAll(() => console.log("Before All Inner"));
+  afterAll(() => console.log("After All Inner"));
+  beforeEach(() => console.log("Befor Each Inner"));
+  afterEach(() => console.log("After Each Inner"));
+
+  test("Test Inner", () => console.log("Test Inner"));
+
+  // decribe didalam describe
+  describe("Inner", () => {
+    beforeAll(() => console.log("Before All Inner"));
+    afterAll(() => console.log("After All Inner"));
+    beforeEach(() => console.log("Befor Each Inner"));
+    afterEach(() => console.log("After Each Inner"));
+
+    test("Test Inner", () => console.log("Test Inner"));
+  });
+});
+```
+
+## Code Coverage
+
+- Saat kita membuat unit test, kadang kita ingin tahu apakah semua kode kita sudah tercakupi dengan semua skenario unit test kita atau belum
+- Jest memiliki fitur yang bernama Code Coverage, dengan ini, kita bisa melihat kode mana yang sudah tercakupi dengan unit test, dan mana yang belum
+- Praktek ini merupakan salah satu best practice dengan menentukan jumlah persentase kode yang harus tercakupi oleh unit test, misal 80%
+
+### Menggunakan Fitur Code Coverage
+
+- Secara default, Jest tidak menggunakan fitur Code Coverage, jika kita ingin menggunakan Code Coverage, kita perlu ubah konfigurasi Jest
+- Caranya kita tambahkan atribut collectCoverage dengan nilai true
+  - https://jestjs.io/docs/configuration#collectcoverage-boolean
+
+```json
+"jest": {
+    "maxConcurrency": 3,
+    "verbose": true,
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    },
+    // highlight-start
+    "collectCoverage": true,
+    // highlight-end
+}
+```
+
+### Folder Coverage
+
+- Jest Code Coverage secara otomatis membuat folder coverage di project kita
+- Jangan lupa untuk `meng-ignore` folder tersebut agar tidak ter commit ke project kita
+- Folder coverage tersebut berisi laporan Code Coverage berupa file html yang bisa kita lihat dengan mudah
+
+### Coverage Threshold
+
+- Kadang ada kalanya kita ingin memastikan persentase Code Coverage, hal ini agar programmer dalam project pasti membuat unit test dengan baik
+- Jest memiliki fitur untuk menentukan Coverage Threshold dengan persentase, dimana jika Threshold nya dibawah persentase yang sudah ditentukan, secara otomatis maka unit test akan gagal
+- Kita bisa tambahkan konfigurasi coverageThreshold
+  - https://jestjs.io/docs/configuration#coveragethreshold-object
+
+#### Jenis Code Coverage
+
+| Jenis      | Keterangan   |
+| ---------- | ------------ |
+| branches   | Alur program |
+| functions  | Function     |
+| lines      | Baris        |
+| statements | Statement    |
+
+```json
+"jest": {
+  // ...
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+  // ...
+  },
+```
+
+### Collect Coverage
+
+- Kadang saat project kita sudah besar, kita ingin menentukan bagian kode mana yang ingin digunakan untuk menghitung Code Coverage nya
+- Kita bisa menggunakan atribut `collectCoveerageFrom`
+  - https://jestjs.io/docs/configuration#collectcoveragefrom-array
+
+```json
+"jest": {
+    // ...
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!vendor/**/*.{js,jsx}"
+    ]
+  },
+```
+
+## It Function
+
+- Sebelumnya untuk membuat unit test, kita menggunakan function test()
+- Di Jest, terdapat alias untuk function test(), yaitu `it()`
+- Sebenarnya tidak ada bedanya dengan function test(), hanya saja, kadang ada programmer yang lebih suka menggunakan function it() agar unit test yang dibuat mirip dengan cerita ketika dibaca kodenya
+
+```js
+describe("...", () => {
+  it("should ...", () => {
+    // code
+  });
+  it("should ...", () => {
+    // code
+  });
+});
+```
+
+## Skip Function
+
+- Saat membuat unit test, lalu kita mendapatkan masalah di salah satu unit test, kadang kita ingin meng-ignore unit test tersebut terlebih dahulu
+- Kita tidak perlu menambahkan komentar pada unit test tersebut
+- Kita bisa menggunakan skip function, yang secara otomatis akan menjadikan unit test tersebut ter-ignore dan tidak akan di eksekusi
+
+Detail : https://jestjs.io/docs/api#testskipname-fn
+
+```js
+test("test 01", () => console.log("test 01"));
+test("test 02", () => console.log("test 02"));
+test.skip("test 03", () => console.log("test 03")); // code ini tidak akan dieksekusi oleh jest
+test("test 04", () => console.log("test 04"));
+test("test 05", () => console.log("test 05"));
+```
+
+## Only Function
+
+- Ketika kita melakukan proses debugging di unit test di dalam sebuah file yang unit test nya banyak, kadang kita ingin fokus ke unit test tertentu
+- Jika kita menggunakan skip unit test yang lain, maka akan sulit jika terlalu banyak
+- Kita bisa menggunakan Only Function, untuk memaksa dalam file tersebut, hanya unit test yang ditandai dengan Only yang di eksekusi
+
+Detail : https://jestjs.io/docs/api#testonlyname-fn-timeout
+
+```js
+test("test 01", () => console.log("test 01"));
+test("test 02", () => console.log("test 02"));
+test.only("test 03", () => console.log("test 03")); // hanya code ini yang dieksekusi oleh jest
+test("test 04", () => console.log("test 04"));
+test("test 05", () => console.log("test 05"));
+```
