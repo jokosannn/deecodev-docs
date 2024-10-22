@@ -4,44 +4,40 @@ sidebar_position: 1
 
 # Introduction
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Selamat datang di dokumentasi resmi **Cothecraftz**! Situs ini menyediakan informasi detail tentang cara memulai, menggunakan, dan berkontribusi pada proyek ini. Dengan Dokumentasi Cothecraftz, Anda dapat dengan mudah menjelajahi <b>panduan</b>, <b>referensi</b>, dan <b>contoh</b> kode secara langkah demi langkah.
 
-## Getting Started
+<!-- ## Fitur Utama
 
-Get started by **creating a new site**.
+- **Fitur 1**: Jelaskan fitur utama pertama.
+- **Fitur 2**: Jelaskan fitur utama kedua.
+- **Fitur 3**: Jelaskan fitur utama ketiga. -->
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+## Why?
 
-### What you'll need
+Cothecraftz menawarkan berbagai manfaat, termasuk:
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+- **Mudah Digunakan**: Dirancang dengan kesederhanaan, proyek kami memungkinkan pengaturan cepat dan kemudahan penggunaan.
+- **Sangat Dapat Disesuaikan**: Sesuaikan fitur sesuai dengan kebutuhan spesifik Anda.
 
-## Generate a new site
+## Start
 
-Generate a new Docusaurus site using the **classic template**.
+Untuk memulai dengan Cothecraftz, silakan ikuti [panduan Memulai](#link-to-getting-started). Bagian ini akan memandu Anda melalui pengaturan awal, mulai dari instalasi hingga penggunaan dasar.
 
-The classic template will automatically be added to your project after you run the command:
+Jika Anda mengalami masalah, silakan merujuk ke [FAQ](#link-to-faq) atau hubungi kami melalui [Saluran Dukungan](#link-to-support).
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+Terima kasih telah memilih Cothecraftz! Kami harap dokumentasi ini membantu Anda memaksimalkan pengalaman Anda.
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+---
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+### Kontribusi
 
-## Start your site
+Kami menyambut kontribusi dari komunitas! Jika Anda tertarik untuk meningkatkan Cothecraftz, silakan periksa [Panduan Kontribusi](#link-to-contributing-guidelines).
 
-Run the development server:
+### Lisensi
 
-```bash
-cd my-website
-npm run start
-```
+Proyek ini dilisensikan di bawah [cothecraftz](https://github.com/cothecraftz).
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+---
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+Happy coding! 🎉
+``

@@ -7,7 +7,7 @@ import prismDark from "./src/utils/prism-dark";
 const config: Config = {
   title: "Cothecraftz",
   tagline: "Cothecraftz Documentation",
-  favicon: "img/cothecraftz.ico",
+  favicon: "img/cothecraftzV2.ico",
 
   // Set the production url of your site here
   url: "https://your-docusaurus-site.example.com",
@@ -52,20 +52,20 @@ const config: Config = {
     // Replace with your project's social card
     image: "img/docusaurus-social-card.jpg",
     navbar: {
-      hideOnScroll: true,
+      // hideOnScroll: true,
       title: "Cothecraftz",
       logo: {
         alt: "My Site Logo",
-        src: "img/cothecraftz.svg",
-        width: 20,
-        height: 20,
+        src: "img/cothecraftzV2.svg",
+        width: 35,
+        height: 35,
       },
       items: [
         {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
           position: "left",
-          label: "Documentation",
+          label: "Docs",
         },
         {
           href: "https://github.com/cothecraftz",

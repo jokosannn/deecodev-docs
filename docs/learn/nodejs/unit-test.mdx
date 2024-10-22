@@ -4,7 +4,9 @@ sidebar_position: 3
 
 # Unit Test
 
-NodeJS Unit Test
+NodeJS Unit Test - Jest
+
+Slide PPT : https://docs.google.com/presentation/d/1-WdE65sFR6fc-klYXtuWvM8MMOJQv3Lj
 
 - NodeJS sendiri sebenarnya memiliki package untuk melakukan assertion, namun kita tidak akan membahasnya, karena jarang sekali orang menggunakan [`package`](https://nodejs.org/api/assert.html) tersebut
 - Programmer NodeJS kebanyakan menggunakan library yang lebih baik untuk melakukan unit test
@@ -526,15 +528,18 @@ describe("Inner", () => {
   - https://jestjs.io/docs/configuration#collectcoverage-boolean
 
 ```json
-"jest": {
+{
+  // ...
+  "jest": {
     "maxConcurrency": 3,
     "verbose": true,
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
     },
     // highlight-start
-    "collectCoverage": true,
+    "collectCoverage": true
     // highlight-end
+  }
 }
 ```
 
@@ -561,8 +566,10 @@ describe("Inner", () => {
 | statements | Statement    |
 
 ```json
-"jest": {
+{
   // ...
+  "jest": {
+    // ...
     "coverageThreshold": {
       "global": {
         "branches": 100,
@@ -570,9 +577,10 @@ describe("Inner", () => {
         "lines": 100,
         "statements": 100
       }
-    },
-  // ...
-  },
+    }
+    // ...
+  }
+}
 ```
 
 ### Collect Coverage
@@ -582,13 +590,13 @@ describe("Inner", () => {
   - https://jestjs.io/docs/configuration#collectcoveragefrom-array
 
 ```json
-"jest": {
+{
+  //...
+  "jest": {
     // ...
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
-      "!vendor/**/*.{js,jsx}"
-    ]
-  },
+    "collectCoverageFrom": ["src/**/*.{js,jsx}", "!vendor/**/*.{js,jsx}"]
+  }
+}
 ```
 
 ## It Function
@@ -639,3 +647,149 @@ test.only("test 03", () => console.log("test 03")); // hanya code ini yang dieks
 test("test 04", () => console.log("test 04"));
 test("test 05", () => console.log("test 05"));
 ```
+
+## Each Function
+
+- Salah satu kesalahan yang biasa dilakukan adalah membuat unit test yang duplicate
+- Biasanya alasan melakukan duplicate unit test, hanya karena data yang di test nya saja berbeda
+- Each Function memungkinkan kita menggunakan data dalam bentuk array, yang akan di iterasi ke dalam kode unit test yang sama
+
+Detail : https://jestjs.io/docs/api#testeachtablename-fn-timeout
+
+```js
+const sumAll = (numbers) => {
+  let total = 0;
+  for (const number of numbers) {
+    total += number;
+  }
+  return total;
+};
+
+const table = [
+  [[], 0],
+  [[10], 10],
+  [[10, 10], 20],
+  [[10, 10, 10], 30],
+  [[10, 10, 10, 10], 40],
+];
+
+test.each(table)("test sumAll(%s) should result %i", (input, expected) => {
+  expect(sumAll(input)).toBe(expected);
+});
+```
+
+#### Object Sebagai Data
+
+- Kadang, saat menggunakan data Array, jika terlalu banyak parameternya, maka akan membingungkan
+- Each Function juga bisa menggunakan data Object, namun kita perlu melakukan destructuring
+
+```js
+const sumAll = (numbers) => {
+  let total = 0;
+  for (const number of numbers) {
+    total += number;
+  }
+  return total;
+};
+
+const table = [
+  { inputs: [10], expected: 10 },
+  { inputs: [10, 10], expected: 20 },
+  { inputs: [10, 10, 10], expected: 30 },
+  { inputs: [10, 10, 10, 10], expected: 40 },
+];
+
+test.each(table)("test sumAll($inputs) should result $expected", ({ inputs, expected }) => {
+  expect(sumAll(inputs)).toBe(expected);
+});
+```
+
+## Concurrent Test
+
+- Secara default, semua unit test akan dijalankan secara sequential, dan unit test selanjutnya akan dijalankan ketiak unit test sebelumnya telah selesai
+- Jest juga mendukung concurrent unit test, dimana kita bisa menandai sebuah unit test agar jalan secara concurrent atau async sehingga tidak perlu ditunggu
+
+Deatail : https://jestjs.io/docs/api#testconcurrentname-fn-timeout
+
+```js
+const sayName = (name) => {
+  if (name) {
+    return `Hello ${name}`;
+  } else {
+    throw new Error("name is required!");
+  }
+};
+
+test.concurrent("concurrent 1", async () => {
+  await expect(sayHelloAsync("Joko")).resolves.toBe("Hello Joko");
+});
+test.concurrent("concurrent 2", async () => {
+  await expect(sayHelloAsync("Joko")).resolves.toBe("Hello Joko");
+});
+test.concurrent("concurrent 3", async () => {
+  await expect(sayHelloAsync("Joko")).resolves.toBe("Hello Joko");
+});
+```
+
+### Membatasi Concurrent
+
+Kita bisa membatasi berapa banyak concurrent test yang berjalan dengan cara menambahkan konfigurasi di Jest nya
+
+Detail : https://jestjs.io/docs/configuration#maxconcurrency-number
+
+```json
+{
+  // ...
+  "jest": {
+    // ...
+    "maxConcurrency": 3
+  }
+}
+```
+
+## Todo Function
+
+- Gunakan Todo Function ketika kita berencana membuat unit test, namun dilakukan
+- Todo Function akan ditampilkan sebagai summary ketika kita menjalankan unit test, untuk mengingatkan kita
+
+Detail : https://jestjs.io/docs/api#testtodoname
+
+```js
+test.todo("should create test fror sumAll() big number");
+test.todo("should create test fror sumAll() negative number");
+```
+
+## Failing Function
+
+- Dalam membuat unit test, jangan hanya membuat skenario sukses
+- Kadang kita juga perlu membuat skenario gagal, atau ekspektasi kita gagal, contoh misal ketika kita mengirim data tidak valid, maka kita berharap kalo kode nya terjadi error
+- Pada kasus ini, Jest menyediakan fitur Failing Function
+  Detail : https://jestjs.io/docs/api#testfailingname-fn-timeout
+
+```js
+const sayName = (name) => {
+  if (name) {
+    return `Hello ${name}`;
+  } else {
+    throw new Error("name is required!");
+  }
+};
+
+test("should be succes func sayName()", () => {
+  expect(sayName("Joko")).toBe("Hello Joko");
+});
+
+// highlight-start
+test.failing("should be error no normal test", () => {
+  sayName();
+});
+// highlight-end
+
+test("should be failed normal test", () => {
+  expect(() => sayName()).toThrow();
+});
+```
+
+## Mock
+
+Coming Soon...
