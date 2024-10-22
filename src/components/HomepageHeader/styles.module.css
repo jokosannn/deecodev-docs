@@ -7,7 +7,8 @@
 .topBannerTitleWrapper {
   max-width: 900px;
   margin: 0 auto;
-  padding-block: 1rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.4rem;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -16,7 +17,7 @@
 }
 
 .topBannerTitleTextUp {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: bold;
   text-transform: uppercase;
   opacity: 0.8;
@@ -25,7 +26,7 @@
 .topBannerTitleTextDown {
   font-weight: bold;
   font-size: 1.8rem;
-  margin-top: -0.2rem;
+  margin-top: -0.5rem;
   background: linear-gradient(
     90deg,
     rgb(131 58 180 / 100%) 0%,
@@ -36,7 +37,7 @@
   -webkit-text-fill-color: transparent;
 }
 
-html[data-theme='dark'] .topBannerTitleTextDown {
+html[data-theme="dark"] .topBannerTitleTextDown {
   background: linear-gradient(90deg, rgb(152 0 255) 0%, rgb(246 41 41) 50%, rgb(255 169 8) 100%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -66,13 +67,12 @@ html[data-theme='dark'] .topBannerTitleTextDown {
   padding: 48px;
 }
 
-html[data-theme='dark'] .hero {
+html[data-theme="dark"] .hero {
   background-color: #2b3137;
 }
 
 .heroInner {
   margin: 0 auto;
-  max-width: 1100px;
   padding: 0 20px;
 }
 
@@ -86,7 +86,7 @@ html[data-theme='dark'] .hero {
   color: var(--ifm-color-primary);
 }
 
-html[data-theme='light'] .heroTitleTextHtml b {
+html[data-theme="light"] .heroTitleTextHtml b {
   color: #4fddbf;
 }
 

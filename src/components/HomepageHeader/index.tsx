@@ -21,14 +21,14 @@ function TopBanner() {
 function HeroBanner() {
   return (
     <div className={styles.hero} data-theme="dark">
-      <div className={styles.heroInner}>
+      <div className={`container ${styles.heroInner}`}>
         <Heading as="h1" className={styles.heroProjectTagline}>
           <img
             alt={translate({ message: "Docusaurus with Keytar" })}
             className={styles.heroLogo}
             src={useBaseUrl("/img/cothecraftz.png")}
-            width="200"
-            height="200"
+            width="220"
+            height="220"
           />
           <span
             className={clsx("md:leading-[65px]", styles.heroTitleTextHtml)}
@@ -45,7 +45,7 @@ function HeroBanner() {
         </Heading>
         <div className={styles.buttonDocs}>
           <Link className="button button--secondary button--lg" to="/docs/intro">
-            Documentation
+            📄️ Documentation
           </Link>
         </div>
       </div>

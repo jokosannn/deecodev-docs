@@ -5,8 +5,8 @@ import prismLight from "./src/utils/prism-light";
 import prismDark from "./src/utils/prism-dark";
 
 const config: Config = {
-  title: "Joko Santoso",
-  tagline: "Dinosaurs are cool",
+  title: "Cothecraftz",
+  tagline: "Cothecraftz Documentation",
   favicon: "img/cothecraftz.ico",
 
   // Set the production url of your site here
@@ -53,7 +53,7 @@ const config: Config = {
     image: "img/docusaurus-social-card.jpg",
     navbar: {
       hideOnScroll: true,
-      title: "Joko Santoso",
+      title: "Cothecraftz",
       logo: {
         alt: "My Site Logo",
         src: "img/cothecraftz.svg",
@@ -65,7 +65,7 @@ const config: Config = {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
           position: "left",
-          label: "Docs",
+          label: "Documentation",
         },
         {
           href: "https://github.com/cothecraftz",
@@ -76,7 +76,7 @@ const config: Config = {
     },
     footer: {
       style: "dark",
-      copyright: `Copyright © ${new Date().getFullYear()} built with love by cotheartz.`,
+      copyright: `Copyright © ${new Date().getFullYear()} built with love by cothecraftz.`,
     },
     prism: {
       theme: prismLight,
