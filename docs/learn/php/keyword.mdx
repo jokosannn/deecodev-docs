@@ -1,0 +1,55 @@
+---
+sidebar_position: 1
+---
+
+# Keyword PHP
+
+## Include And Require
+
+```js
+include 'file.php';
+require 'file.php';
+```
+
+## Isset()
+
+```js
+isset($_POST["submit"]); // true or false
+```
+
+## PHP Global Variabel
+
+The PHP superglobal variables are:
+
+- $GLOBALS
+- $\_SERVER
+- $\_REQUEST
+- $\_POST
+- $\_GET
+- $\_FILES
+- $\_ENV
+- $\_COOKIE
+- $\_SESSION
+
+### $GLOBALS
+
+```js
+$x = 75;
+
+function myfunction() {
+  echo $GLOBALS['x'];
+}
+
+myfunction()
+```
+
+### $\_SERVER
+
+```js
+echo $_SERVER['PHP_SELF'];
+echo $_SERVER['SERVER_NAME'];
+echo $_SERVER['HTTP_HOST'];
+echo $_SERVER['HTTP_REFERER'];
+echo $_SERVER['HTTP_USER_AGENT'];
+echo $_SERVER['SCRIPT_NAME'];
+```
